@@ -18,3 +18,8 @@ obj
 Icon?
 ehthumbs.db
 Thumbs.db
+
+#other files
+BuildLog.txt
+build
+install
