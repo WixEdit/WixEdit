@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<Template Title="Virtual directory in IIS" Description="This helps you to create a simple virtual directory in IIS."
+xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Configure default website</Title>
+    	<Description>Specify the properties of the virtual directory you want to create.</Description>
+    	<TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product" UseExisting="iis:WebDirProperties">
+    		<iis:WebDirProperties 
+    			Id="WebVirtualDirProperties" 
+    			Execute="yes" 
+    			Script="yes" 
+    			Read="yes" 
+    			WindowsAuthentication="yes" 
+    			AnonymousAccess="no" />
+    	</TemplatePart>
+    	<TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product" UseExisting="iis:WebSite">
+    		<!-- Web site is only created if it doesn't already exist -->
+    		<iis:WebSite Id="DefaultWebSite" Description="Default Web Site">
+    			<iis:WebAddress Id="AllUnassigned" Port="80" />
+    		</iis:WebSite>
+    	</TemplatePart>
+    	<Edit Ref="iis:WebDirProperties/@Execute" Description="Scripts, such as ASP scripts, can be run." />
+    	<Edit Ref="iis:WebDirProperties/@Script" Description="Executable can be executed." />
+    	<Edit Ref="iis:WebDirProperties/@Read" Description="To allow users to read or download files or directories and their associated properties." />
+    	<Edit Ref="iis:WebDirProperties/@WindowsAuthentication" Description="Enables integrated Windows authentication to be used on the site." />
+    	<Edit Ref="iis:WebDirProperties/@AnonymousAccess" Description="Enables anonymous acces to be allowed to the site." />
+    </Step>
+    <Step Sequence="2">
+    	<Title>Configure default website</Title>
+    	<Description>Specify the properties of the virtual directory you want to create.</Description>
+    	<TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product" UseExisting="Property[@Id='TARGETVDIR']">
+        	<!--
+    		TARGETVDIR is the name of the Virtual Directory for this site.
+    		TARGETDIR is the directory location of the files for the site.
+    		-->
+    		<wix:Property Id="TARGETVDIR" Value="VirtualDirectoryName" />
+    	</TemplatePart>
+    	<TemplatePart SelectionTarget="//wix:Directory|//wix:DirectoryRef">
+    		<wix:Component Id="C_VirtualDirComponent" Guid="{00000000-0000-0000-0000-000000000000}">
+    		      <iis:WebVirtualDir Id="VirtualDir" Alias="[TARGETVDIR]" Directory="TARGETDIR" WebSite="DefaultWebSite" DirProperties="WebVirtualDirProperties" >
+    		            <iis:WebApplication Id="WebApplication" Name="[TARGETVDIR]" WebAppPool="C_MyAppPool"/>
+    		      </iis:WebVirtualDir>
+    		</wix:Component>
+    	</TemplatePart>
+    	<Edit Ref="wix:Property/@Value" Description="Name of the virtual directory" />
+    	<!--Edit Ref="wix:Component/@Id" / -->
+    	<Edit Ref="wix:Component/@Guid" Mode="GenerateGuid" />
+    	<!-- Edit Ref="wix:Component/iis:WebVirtualDir/@Id" / -->
+    	<Edit Ref="wix:Component/iis:WebVirtualDir/@Directory" Mode="Select" Selection="//wix:Directory/@Id|//wix:DirectoryRef/@Id" Description="The directory where the virtual directory should be created." />
+    </Step>
+</Template>

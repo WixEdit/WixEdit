@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<Template Title="NGen Managed Assemblies" Description="This helps you to NGen managed assemblies during installation."
+xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>NGen Managed Assemblies</Title>
+    	<Description>Specify the properties of the managed assemblies you want to NGen.</Description>
+    	<TemplatePart SelectionTarget="//wix:File" Description="Select an executable to use for the shortcut">
+            <netfx:NativeImage Id="ngen_MyApplication.exe" Platform="32bit" Priority="0" AppBaseDirectory=""/>
+    	</TemplatePart>
+    	<Edit Ref="netfx:NativeImage/@AppBaseDirectory" Mode="Select" Selection="//wix:Directory/@Id|//wix:DirectoryRef/@Id" Description="The directory to use to search for dependent assemblies during the image generation." />
+    </Step>
+</Template>

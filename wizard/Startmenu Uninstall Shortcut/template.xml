@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Template Title="Startmenu uninstall shortcut" Description="This helps you to add an uninstall shortcut to the users startmenu"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Create startmenu uninstall shortcut</Title>
+    	<Description>Specify the properties of the uninstall shortcut.</Description>
+    	<TemplatePart Target="/*/*/wix:Directory" IfNotPresent="//wix:Component[@Id='StartMenuShortcuts']">
+            <wix:Directory Id="ProgramMenuFolder">
+                <wix:Directory Id="ProgramMenuDir" Name="">
+                    <wix:Component Id="StartMenuShortcuts" Guid="{00000000-0000-0000-0000-000000000000}">
+                        <wix:RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+                        <wix:RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                    </wix:Component>
+                </wix:Directory>
+            </wix:Directory>
+    	</TemplatePart>
+    	<TemplatePart Target="//wix:Component[@Id='StartMenuShortcuts']">
+            <wix:Shortcut Id="UninstallProduct" Name="Uninstall" Description="Uninstalls the application" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]"/>
+    	</TemplatePart>
+    	<Edit Ref="wix:Shortcut/@Name" Description="The name of the shortcut that will be displayed to the user." />
+    	<Edit Ref="wix:Shortcut/@Description" Description="The Description of the shortcut that will be displayed to the user." />
+    	<Edit Ref="wix:Directory/wix:Directory/@Name" Description="The name of the directory that will be created in the users startmenu." />
+    	<Edit Ref="wix:Directory/wix:Directory/wix:Component/@Guid" Mode="GenerateGuid" />
+    </Step>
+</Template>

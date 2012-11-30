@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<Template Title="Startmenu website shortcut" Description="This helps you to add an website shortcut to the users startmenu"
+xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Create startmenu website shortcut</Title>
+    	<Description>Specify the properties of the website shortcut.</Description>
+    	<TemplatePart Target="/*/*/wix:Directory" IfNotPresent="//wix:Component[@Id='StartMenuShortcuts']">
+            <wix:Directory Id="ProgramMenuFolder">
+                <wix:Directory Id="ProgramMenuDir" Name="">
+                    <wix:Component Id="StartMenuShortcuts" Guid="{00000000-0000-0000-0000-000000000000}">
+                        <wix:RemoveFolder Id="ProgramMenuDir" On="uninstall" />
+                        <wix:RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+                    </wix:Component>
+                </wix:Directory>
+            </wix:Directory>
+    	</TemplatePart>
+    	<TemplatePart Target="//wix:Component[@Id='StartMenuShortcuts']">
+            <util:InternetShortcut Id="WebsiteShortcut" Name="The Sample Documentation" Target="http://www.example.com/documentation.html"/>
+    	</TemplatePart>
+    	<Edit Ref="util:InternetShortcut/@Name" Description="The name of the shortcut that will be displayed to the user." />
+    	<Edit Ref="util:InternetShortcut/@Target" Description="The URL of the website that the shortcut will point to." />
+    	<Edit Ref="wix:Directory/wix:Directory/@Name" Description="The name of the directory that will be created in the users startmenu." />
+    	<Edit Ref="wix:Directory/wix:Directory/wix:Component/@Guid" Mode="GenerateGuid" />
+    </Step>
+</Template>

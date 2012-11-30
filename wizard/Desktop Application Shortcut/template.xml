@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<Template Title="Desktop application shortcut" Description="This helps you to add an application shortcut to the users desktop"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Create desktop application shortcut</Title>
+    	<Description>Specify the properties of the shortcut you want to make.</Description>
+    	<TemplatePart SelectionTarget="//wix:File" Description="Select an executable to use for the shortcut">
+            <wix:Shortcut Id="desktopShortcut" Directory="DesktopFolder" Name="" WorkingDirectory="INSTALLDIR" Advertise="yes" Icon="DesktopIcon.exe" IconIndex="0" />
+    	</TemplatePart>
+        <TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product">
+            <wix:Icon Id="DesktopIcon.exe" SourceFile="" />
+        </TemplatePart>
+    	<TemplatePart Target="/*/*/wix:Directory">
+            <wix:Directory Id="DesktopFolder" />
+    	</TemplatePart>
+        <Edit Ref="wix:Icon[@Id='DesktopIcon.exe']/@SourceFile" Mode="CopyFromTarget" Target="//wix:File" RelativePath="@src|@Source" />
+    	<Edit Ref="wix:Shortcut/@Name" Description="The name of the shortcut that will be displayed to the user." />
+    </Step>
+</Template>

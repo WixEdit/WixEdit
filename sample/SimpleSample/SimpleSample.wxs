@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="DEAFBEEF-DEAD-DEAD-DEAD-DEADBEEF0001" Name="TestProduct" Language="1033" Version="0.0.0.1" Manufacturer="WixEdit" UpgradeCode="4C0C8660-B2A0-4862-8590-8352F6B36FFC">
+    <Package Description="Test file in a Product" Comments="Simple test" InstallerVersion="200" Compressed="yes" />
+    <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder" Name="PFiles">
+        <Directory Id="TestProduct" Name="TestProduct">
+          <Component Id="TestComponent" Guid="DEAFBEEF-DEAD-DEAD-DEAD-DEADBEEF0003">
+            <File Id="TestFile" Name="Test.txt" KeyPath="yes" DiskId="1" Source="Test.txt" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="TestProductFeature" Title="Test" Level="1">
+      <ComponentRef Id="TestComponent" />
+    </Feature>
+    <UI />
+  </Product>
+</Wix>

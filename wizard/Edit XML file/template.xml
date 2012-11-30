@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Template Title="Modify a XML file" Description="This helps you to modify a value in an XML file. For example: Modify the connection string in a web.config file."
+xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Modify a XML file during installtion</Title>
+    	<Description>Specify the properties of the XML file modification you want to make.</Description>
+    	<TemplatePart SelectionTarget="//wix:Directory|//wix:DirectoryRef" Description="Select the location to add the component to.">
+                <wix:Component Id="C_ConfigFile" Guid="{00000000-0000-0000-0000-000000000000}" KeyPath="yes">
+                   <util:XmlFile Id="ModifyXmlFile" 
+                                 Action="setValue"
+                                 ElementPath="/configuration/appSettings/add[\[]@key='ConnectionString'[\]]"
+                                 Name="value" 
+                                 File="[TARGETDIR]web.config" 
+                                 Value="server=localhost;database=Northwind;uid=sa;password=secret;" />
+                </wix:Component>
+    	</TemplatePart>
+    	<Edit Ref="wix:Component/util:XmlFile/@ElementPath" Description="XPath of the XML element you want to be modified." />
+    	<Edit Ref="wix:Component/util:XmlFile/@Name" Description="Name of the XML attribute/node you want to set. (Leave empty to set text value)" RemoveEmptyAttribute="true" />
+    	<Edit Ref="wix:Component/util:XmlFile/@File" Description="Select the XML file to modify." Mode="Select" Selection="//wix:File/@Id" FormatString="[#{0}]" />
+    	<Edit Ref="wix:Component/util:XmlFile/@Value" Description="New value to be written." />
+    	<Edit Ref="wix:Component/@Guid" Mode="GenerateGuid" />
+    </Step>
+</Template>

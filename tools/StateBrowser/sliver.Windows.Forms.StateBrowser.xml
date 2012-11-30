@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>sliver.Windows.Forms.StateBrowser</name>
+    </assembly>
+    <members>
+        <member name="T:sliver.Windows.Forms.StateBrowser">
+            <summary>
+            A Windows Forms control that displays an object graph in a tree.
+            </summary>
+        </member>
+        <member name="T:sliver.Windows.Forms.IStateBrowser">
+            <summary>
+            Provides functionality required by state browsers.
+            </summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.BoldMemberNames">
+            <summary>
+		An array of member names to bold in the tree.
+		</summary><remarks>
+		Any members with names contained in the array will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.BoldMemberTypes">
+            <summary>
+			An ArrayList of Types to bold in the tree.  
+		</summary><remarks>
+			Any member types that are contained in the arraylist will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.ObjectToBrowse">
+            <summary>
+			The object to browse.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.ShowDataTypes">
+            <summary>
+			Determines if the data type will be shown in the tree.  Default is true.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.ShowNonPublicMembers">
+            <summary>
+			Determines if private members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.IStateBrowser.ShowStaticMembers">
+            <summary>
+			Determines if static members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowser.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowser.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowser.InitializeComponent">
+            <summary> 
+            Required method for Designer support - do not modify 
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="E:sliver.Windows.Forms.StateBrowser.ShowNonPublicMembersChanged">
+            <summary>
+            Occurs when the value of the ShowNonPublicMembers property changes.
+            </summary>
+        </member>
+        <member name="E:sliver.Windows.Forms.StateBrowser.ShowStaticMembersChanged">
+            <summary>
+            Occurs when the value of the ShowStaticMembers property changes.
+            </summary>
+        </member>
+        <member name="E:sliver.Windows.Forms.StateBrowser.ShowDataTypesChanged">
+            <summary>
+            Occurs when the value of the ShowDataTypesChanged property changes.
+            </summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.Object">
+            <summary>
+			The object to browse.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.ObjectToBrowse">
+            <summary>
+			The object to browse.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.BoldMemberTypes">
+            <summary>
+			An ArrayList of Types to bold in the tree.  
+		</summary><remarks>
+			Any member types that are contained in the arraylist will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.BoldMemberNames">
+            <summary>
+		An array of member names to bold in the tree.
+		</summary><remarks>
+		Any members with names contained in the array will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.ShowDataTypes">
+            <summary>
+			Determines if the data type will be shown in the tree.  Default is true.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.ShowNonPublicMembers">
+            <summary>
+			Determines if private members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowser.ShowStaticMembers">
+            <summary>
+			Determines if static members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="T:sliver.Windows.Forms.StateBrowserForm">
+            <summary>
+            Form with a StateBrowser control.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowserForm.#ctor">
+            <summary>
+            Creates an instance of the StateBrowserForm.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowserForm.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.StateBrowserForm.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.StateBrowserControl">
+            <summary>
+            The StateBrowser on the form.
+            </summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.BoldMemberNames">
+            <summary>
+		An array of member names to bold in the tree.
+		</summary><remarks>
+		Any members with names contained in the array will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.BoldMemberTypes">
+            <summary>
+			An ArrayList of Types to bold in the tree.  
+		</summary><remarks>
+			Any member types that are contained in the arraylist will be bold.
+		</remarks>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.ObjectToBrowse">
+            <summary>
+			The object to browse.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.ShowDataTypes">
+            <summary>
+			Determines if the data type will be shown in the tree.  Default is true.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.ShowNonPublicMembers">
+            <summary>
+			Determines if private members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="P:sliver.Windows.Forms.StateBrowserForm.ShowStaticMembers">
+            <summary>
+			Determines if static members will be shown in the tree.  Default is false.
+		</summary>
+        </member>
+        <member name="T:sliver.Windows.Forms.TypeCollection">
+            <summary>
+            Collection of Types.
+            </summary>
+        </member>
+        <member name="M:sliver.Windows.Forms.TypeCollection.Add(System.Type)">
+            <summary>
+            Adds a Type.
+            </summary>
+            <param name="type">The Type to add.</param>
+            <returns>Index of the newly added Type.</returns>
+        </member>
+        <member name="M:sliver.Windows.Forms.TypeCollection.AddRange(System.Type[])">
+            <summary>
+            Adds one or more types to the collection.
+            </summary>
+            <param name="types">The Types to add.</param>
+        </member>
+        <member name="M:sliver.Windows.Forms.TypeCollection.Remove(System.Type)">
+            <summary>
+            Removes a Type from the collection.
+            </summary>
+            <param name="type">The Type to remove.</param>
+        </member>
+        <member name="M:sliver.Windows.Forms.TypeCollection.IndexOf(System.Type)">
+            <summary>
+            Returns the zero-based index of the first occurrence of a Type in the collecton.
+            </summary>
+            <param name="type">The Type to locate in the collection. The value can be a null reference.</param>
+            <returns></returns>
+        </member>
+        <member name="M:sliver.Windows.Forms.TypeCollection.Contains(System.Type)">
+            <summary>
+            Determines whether an element is in the collection.
+            </summary>
+            <param name="type">The Type to locate in the collection.  The value can be a null reference.</param>
+            <returns>True if item is found in the collection; otherwise, false.</returns>
+        </member>
+    </members>
+</doc>

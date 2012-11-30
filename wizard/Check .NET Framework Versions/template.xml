@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<Template Title="Check for .NET Framework Versions" Description="This helps you to check for .NET Framework versions before installation."
+xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension"
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Check for .NET Framework Versions</Title>
+    	<Description>Specify the properties of the .NET Framework to check.</Description>
+    	<TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product">
+            <wix:PropertyRef Id="NETFRAMEWORK20"/>
+            <wix:Condition Message="This application requires .NET Framework X.Y.">
+              Installed OR NETFRAMEWORK20
+            </wix:Condition>
+    	</TemplatePart>
+    	<Edit Ref="wix:PropertyRef/@Id" Mode="Dropdown" Description="The version of the .NET Framework to require.">
+        	<Option Value="NETFRAMEWORK10">.NET Framework 1.0</Option>
+        	<Option Value="NETFRAMEWORK11">.NET Framework 1.1</Option>
+        	<Option Value="NETFRAMEWORK20">.NET Framework 2.0</Option>
+        	<Option Value="NETFRAMEWORK30">.NET Framework 3.0</Option>
+        	<Option Value="NETFRAMEWORK35">.NET Framework 3.5</Option>
+    	</Edit>
+    	<Edit Ref="wix:Condition/@Message" Description="Message to display when the specific version of the .NET Framework is not found." />
+        <Edit Ref="wix:Condition" Mode="CopyFromTarget" FormatString="Installed OR {0}" Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product" RelativePath="wix:PropertyRef/@Id" />
+    </Step>
+</Template>

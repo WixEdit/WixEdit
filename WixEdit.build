@@ -1,0 +1,276 @@
+<?xml version="1.0" ?>
+<!--
+   Copyright (c) 2005 J.Keuper (j.keuper@gmail.com)
+  
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to 
+   deal in the Software without restriction, including without limitation the 
+   rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+   sell copies of the Software, and to permit persons to whom the Software is 
+   furnished to do so, subject to the following conditions:
+  
+   The above copyright notice and this permission notice shall be included in 
+   all copies or substantial portions of the Software.
+  
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+   IN THE SOFTWARE.
+-->
+<project name="WixEdit" default="all">
+    <property name="project.build" value="${project::get-base-directory()}\build"/>
+    <property name="project.source" value="${project::get-base-directory()}\src"/>
+    <property name="project.resource" value="${project::get-base-directory()}\res" />
+    <property name="project.sample" value="${project::get-base-directory()}\sample"/>
+    <property name="project.release" value="${project::get-base-directory()}\release"/>
+    <property name="project.lib" value="${project::get-base-directory()}\lib"/>
+    <property name="project.tools" value="${project::get-base-directory()}\tools"/>
+
+    <property name="project.installer" value="${project::get-base-directory()}\installer"/>
+
+    <property name="project.install" value="${project::get-base-directory()}\install"/>
+    <property name="project.install.src" value="${project.install}\src"/>
+    <property name="project.install.res" value="${project.install}\res"/>
+    <property name="project.install.bin" value="${project.install}\bin"/>
+    <property name="project.install.lib" value="${project.install}\lib"/>
+
+    <property name="project.output" value="${project.build}\${project::get-name()}.exe"/>
+
+    <property name="project.wix" value="${project.tools}\wix-3.5.1322.0"/>
+
+    <target name="all" depends="clean,build" />
+
+    <target name="clean">
+        <delete failonerror="false" dir="${project.build}"/>
+        <delete failonerror="false" dir="${project.install}"/>
+        <delete failonerror="false" dir="${project.release}"/>
+    </target>
+
+    <target name="build" depends="generate-version">
+		<mkdir dir="${project.build}" />
+		<csc    target="winexe" 
+                output="${project.output}"
+                win32icon="${project.resource}\dialog\source.ico"
+                debug="true">
+            <sources basedir="${project.source}">
+                <include name="**/*.cs" />
+            </sources>
+        
+            <resources prefix="${project::get-name()}.res" basedir="${project.resource}" dynamicprefix="true">
+                <include name="**/*.*" />
+            </resources>
+        
+        	<references basedir="${project.lib}" >
+        		<include name="*.dll" />
+        	</references>
+        </csc>
+        <copy todir="${project.build}">  
+        	<fileset basedir="${project.lib}" >
+        		<include name="*.dll" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="rerelease" >
+        <property name="project.revision" value="true"/>
+
+		<call target="release" />
+    </target>
+
+    <target name="rebuild" >
+        <property name="project.revision" value="true"/>
+
+		<call target="build" />
+    </target>
+
+    <target name="release" depends="all">
+        <if test="${property::exists('project.version')}">
+            <property name="project.version.string" value="-${project.version}" />
+        </if>
+        <if test="${not property::exists('project.version')}">
+            <property name="project.version.string" value="" />
+        </if>
+
+		<mkdir dir="${project.release}" />
+        <zip zipfile="${project.release}\wixedit${project.version.string}-bin.zip">
+            <fileset basedir="${project::get-base-directory()}">
+                <include name="build/**/*" />
+                <include name="sample/UISample/*" />
+                <include name="sample/DarkSample/*" />
+                <include name="sample/SimpleSample/*" />
+                <include name="templates/UISample/**/*" />
+                <include name="wizard/Add Userinterface/*" />
+                <include name="wizard/Check .NET Framework Versions/*" />
+                <include name="wizard/Create Virtual Directory/*" />
+                <include name="wizard/Desktop Application Shortcut/*" />
+                <include name="wizard/Edit XML file/*" />
+                <include name="wizard/NGen Managed Assemblies/*" />
+                <include name="wizard/Startmenu Application Shortcut/*" />
+                <include name="wizard/Startmenu Uninstall Shortcut/*" />
+                <include name="wizard/Startmenu Website Shortcut/*" />
+                <exclude name="**/CVS/" />
+            </fileset>
+        </zip>
+        <zip zipfile="${project.release}\wixedit${project.version.string}-src.zip">
+            <fileset basedir="${project::get-base-directory()}">
+                <include name="src/**/*" />
+                <include name="res/**/*" />
+                <include name="lib/**/*" />
+                <include name="installer/**/*" />
+                <include name="sample/UISample/*" />
+                <include name="sample/DarkSample/*" />
+                <include name="sample/SimpleSample/*" />
+                <include name="templates/UISample/**/*" />
+                <include name="wizard/Add Userinterface/*" />
+                <include name="wizard/Check .NET Framework Versions/*" />
+                <include name="wizard/Create Virtual Directory/*" />
+                <include name="wizard/Desktop Application Shortcut/*" />
+                <include name="wizard/Edit XML file/*" />
+                <include name="wizard/NGen Managed Assemblies/*" />
+                <include name="wizard/Startmenu Application Shortcut/*" />
+                <include name="wizard/Startmenu Uninstall Shortcut/*" />
+                <include name="wizard/Startmenu Website Shortcut/*" />
+                <include name="*.build" />
+                <include name="WixEdit.csproj" />
+                <exclude name="${project.installer}\*.msi"/>
+                <exclude name="${project.installer}\*.wixobj"/>
+                <exclude name="${project.installer}\*.wixpdb"/>
+                <exclude name="**/CVS/" />
+            </fileset>
+        </zip>
+
+		<mkdir dir="${project.install}" />
+		<mkdir dir="${project.install}\WixEdit" />
+        <copy todir="${project.install}\WixEdit">  
+        	<fileset basedir="${project::get-base-directory()}">
+                <include name="src/**/*" />
+                <include name="res/**/*" />
+                <include name="lib/**/*" />
+                <include name="installer/**/*" />
+                <include name="sample/UISample/*" />
+                <include name="sample/DarkSample/*" />
+                <include name="sample/SimpleSample/*" />
+                <include name="*.build" />
+                <exclude name="**/CVS/" />
+            </fileset>
+        </copy>
+
+        <copy todir="${project.install}">  
+        	<fileset basedir="${project::get-base-directory()}">
+                <include name="sample/**/*" />
+                <exclude name="**/CVS/" />
+            </fileset>
+        </copy>
+
+        <copy todir="${project.install}">  
+        	<fileset basedir="${project.installer}">
+                <include name="license.rtf" />
+            </fileset>
+        </copy>
+
+        <copy todir="${project.install}">  
+        	<fileset basedir="${project.installer}">
+                <include name="Binary/**/*" />
+                <exclude name="**/CVS/" />
+            </fileset>
+        </copy>
+
+        <if test="${not directory::exists(project.wix)}">
+            <fail message="Cannot find Wix binaries directory for making a release" />
+        </if>
+        <if test="${directory::exists(project.wix)}">
+          <zip zipfile="${project.install}\Sources.zip">
+              <fileset basedir="${project::get-base-directory()}">
+                  <include name="src/**/*" />
+                  <include name="res/**/*" />
+                  <include name="lib/**/*" />
+                  <include name="installer/**/*" />
+                  <include name="sample/UISample/*" />
+                  <include name="sample/DarkSample/*" />
+                  <include name="sample/SimpleSample/*" />
+                  <include name="templates/UISample/**/*" />
+                  <include name="wizard/Add Userinterface/*" />
+                  <include name="wizard/Check .NET Framework Versions/*" />
+                  <include name="wizard/Create Virtual Directory/*" />
+                  <include name="wizard/Desktop Application Shortcut/*" />
+                  <include name="wizard/Edit XML file/*" />
+                  <include name="wizard/NGen Managed Assemblies/*" />
+                  <include name="wizard/Startmenu Application Shortcut/*" />
+                  <include name="wizard/Startmenu Uninstall Shortcut/*" />
+                  <include name="wizard/Startmenu Website Shortcut/*" />
+                  <include name="*.build" />
+                  <include name="WixEdit.csproj" />
+                  <exclude name="${project.installer}\*.msi"/>
+                  <exclude name="${project.installer}\*.wixobj"/>
+                  <exclude name="${project.installer}\*.wixpdb"/>
+                  <exclude name="**/CVS/" />
+              </fileset>
+          </zip>
+
+          <if test="${property::exists('project.version')}">
+              <property name="installer.version" value="${project.version}" />
+          </if>
+          <if test="${not property::exists('project.version')}">
+              <property name="installer.version" value="0.0.0" />
+          </if>
+  
+          <exec program="${project.wix}/candle.exe" commandline="-nologo -ext WixNetfxExtension &quot;${project.installer}\WixEdit.wxs&quot; -dVERSION=${installer.version}" workingdir="${project.install}" />
+          <exec program="${project.wix}/light.exe" commandline="-nologo -ext WixNetfxExtension -out wixedit${project.version.string}.msi WixEdit.wixobj" workingdir="${project.install}" />
+  
+          <copy todir="${project.release}" file="${project.install}\wixedit${project.version.string}.msi" />
+        </if>
+    </target>
+
+    <!--
+        Generate the version:
+        Increment build number and set the revision to 0.
+        In case of a rerelease, only increment revision.
+
+        To change the MajorVersion of MinorVersion edit the WixEdit.version.xml
+    -->
+    <target name="generate-version">
+        <if test="${file::exists('WixEdit.version.xml')}">
+            <xmlpeek file="WixEdit.version.xml" xpath="/WixEdit/MajorVersion" property="project.version.major" />
+            <xmlpeek file="WixEdit.version.xml" xpath="/WixEdit/MinorVersion" property="project.version.minor" />
+            <xmlpeek file="WixEdit.version.xml" xpath="/WixEdit/BuildNumber" property="project.version.build" />
+            <xmlpeek file="WixEdit.version.xml" xpath="/WixEdit/Revision" property="project.version.revision" />
+    
+            <!--<script language="C#">
+              <code>
+                <![CDATA[
+                  public static void ScriptMain(Project project) {
+                      if (project.Properties["project.revision"] != null &&
+                          project.Properties["project.revision"] == "true") {
+                          int revisionNumber = int.Parse(project.Properties["project.version.revision"]) + 1;
+                          project.Properties["project.version.revision"] = revisionNumber.ToString();
+                      } else {
+                          int buildNumber = int.Parse(project.Properties["project.version.build"]) + 1;
+                          project.Properties["project.version.build"] = buildNumber.ToString();
+                          project.Properties["project.version.revision"] = "0";
+                      }
+                  }
+                ]]>
+              </code>
+            </script>-->
+    
+            <xmlpoke file="WixEdit.version.xml" xpath="/WixEdit/BuildNumber" value="${project.version.build}" />
+            <xmlpoke file="WixEdit.version.xml" xpath="/WixEdit/Revision" value="${project.version.revision}" />
+    
+            <property name="project.version" value="${project.version.major}.${project.version.minor}.${project.version.build}"/>
+    
+            <delete failonerror="false" file="${project.source}\AssemblyVersionInfo.cs"/>
+            <asminfo output="${project.source}/AssemblyVersionInfo.cs" language="CSharp">
+                <imports>
+                    <import namespace="System.Reflection" />
+                </imports>
+                <attributes>
+                    <attribute type="AssemblyVersionAttribute" value="${project.version}.${project.version.revision}" />
+                    <attribute type="AssemblyInformationalVersionAttribute" value="${project.version}" />
+                </attributes>
+            </asminfo>
+        </if>
+    </target>
+</project>

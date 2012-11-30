@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Template Title="Add Userinterface" Description="This helps you to add a userinterface to the installer."
+xmlns:wix="http://schemas.microsoft.com/wix/2006/wi">
+    <Step Sequence="1">
+    	<Title>Add a userinterface</Title>
+    	<Description>Select a userinterface to add.</Description>
+    	<TemplatePart Target="/wix:Wix/wix:Module|/wix:Wix/wix:Product">
+                <wix:UIRef Id="WixUI_Minimal" />
+    	</TemplatePart>
+    	<Edit Ref="wix:UIRef/@Id" Description="Select type of userinterface." Mode="Dropdown">
+<!--             <Option Value="WixUI_Advanced">Advanced</Option> 
+Requires:
+<Property Id="ApplicationFolderName" Value="Acme Sample Application" />
+<Property Id="WixAppFolder" Value="WixPerUserFolder" /> 
+-->
+            <Option Value="WixUI_FeatureTree">FeatureTree</Option>
+<!--            <Option Value="WixUI_InstallDir">InstallDir</Option> 
+Requires:
+<Property Id="WIXUI_INSTALLDIR" Value="TARGETDIR" /> 
+-->
+            <Option Value="WixUI_Minimal">Minimal</Option>
+            <Option Value="WixUI_Mondo">Mondo</Option>
+        </Edit>
+    </Step>
+</Template>

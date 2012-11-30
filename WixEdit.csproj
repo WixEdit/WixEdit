@@ -1,0 +1,617 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{34D47764-B2F0-4BB6-BD84-C47DD3DCA20F}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ApplicationIcon>src\App.ico</ApplicationIcon>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>WixEdit</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <DelaySign>false</DelaySign>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>WixEdit</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>true</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <BaseAddress>285212672</BaseAddress>
+    <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <DebugSymbols>false</DebugSymbols>
+    <FileAlignment>4096</FileAlignment>
+    <NoStdLib>false</NoStdLib>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <RemoveIntegerChecks>false</RemoveIntegerChecks>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+    <ErrorReport>prompt</ErrorReport>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Design">
+      <Name>System.Design</Name>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Name>System.Drawing</Name>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Name>System.Windows.Forms</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="res\About.png" />
+    <EmbeddedResource Include="res\bmp\arc.bmp" />
+    <EmbeddedResource Include="res\bmp\back.bmp" />
+    <EmbeddedResource Include="res\bmp\bld.bmp" />
+    <EmbeddedResource Include="res\bmp\button.bmp" />
+    <EmbeddedResource Include="res\bmp\camera.bmp" />
+    <EmbeddedResource Include="res\bmp\clear.bmp" />
+    <EmbeddedResource Include="res\bmp\cnt.bmp" />
+    <EmbeddedResource Include="res\bmp\copy.bmp" />
+    <EmbeddedResource Include="res\bmp\ctr.bmp" />
+    <EmbeddedResource Include="res\bmp\cut.bmp" />
+    <EmbeddedResource Include="res\bmp\dblundr.bmp" />
+    <EmbeddedResource Include="res\bmp\delete.bmp" />
+    <EmbeddedResource Include="res\bmp\discnet.bmp" />
+    <EmbeddedResource Include="res\bmp\drawing.bmp" />
+    <EmbeddedResource Include="res\bmp\ellipse.bmp" />
+    <EmbeddedResource Include="res\bmp\exit.bmp" />
+    <EmbeddedResource Include="res\bmp\find.bmp" />
+    <EmbeddedResource Include="res\bmp\freeform.bmp" />
+    <EmbeddedResource Include="res\bmp\front.bmp" />
+    <EmbeddedResource Include="res\bmp\group.bmp" />
+    <EmbeddedResource Include="res\bmp\help.bmp" />
+    <EmbeddedResource Include="res\bmp\help2.bmp" />
+    <EmbeddedResource Include="res\bmp\import.bmp" />
+    <EmbeddedResource Include="res\bmp\info.bmp" />
+    <EmbeddedResource Include="res\bmp\itl.bmp" />
+    <EmbeddedResource Include="res\bmp\jst.bmp" />
+    <EmbeddedResource Include="res\bmp\lft.bmp" />
+    <EmbeddedResource Include="res\bmp\line.bmp" />
+    <EmbeddedResource Include="res\bmp\linestyl.bmp" />
+    <EmbeddedResource Include="res\bmp\mapnet.bmp" />
+    <EmbeddedResource Include="res\bmp\mcr.bmp" />
+    <EmbeddedResource Include="res\bmp\new.bmp" />
+    <EmbeddedResource Include="res\bmp\open.bmp" />
+    <EmbeddedResource Include="res\bmp\options.bmp" />
+    <EmbeddedResource Include="res\bmp\paste.bmp" />
+    <EmbeddedResource Include="res\bmp\print.bmp" />
+    <EmbeddedResource Include="res\bmp\prop.bmp" />
+    <EmbeddedResource Include="res\bmp\rectangl.bmp" />
+    <EmbeddedResource Include="res\bmp\redo.bmp" />
+    <EmbeddedResource Include="res\bmp\rt.bmp" />
+    <EmbeddedResource Include="res\bmp\save.bmp" />
+    <EmbeddedResource Include="res\bmp\saveas.bmp" />
+    <EmbeddedResource Include="res\bmp\settings.bmp" />
+    <EmbeddedResource Include="res\bmp\smallcap.bmp" />
+    <EmbeddedResource Include="res\bmp\sortasc.bmp" />
+    <EmbeddedResource Include="res\bmp\sortdes.bmp" />
+    <EmbeddedResource Include="res\bmp\spelling.bmp" />
+    <EmbeddedResource Include="res\bmp\strikthr.bmp" />
+    <EmbeddedResource Include="res\bmp\sum.bmp" />
+    <EmbeddedResource Include="res\bmp\tab-cntr.bmp" />
+    <EmbeddedResource Include="res\bmp\tab-dec.bmp" />
+    <EmbeddedResource Include="res\bmp\tab-left.bmp" />
+    <EmbeddedResource Include="res\bmp\tab-rht.bmp" />
+    <EmbeddedResource Include="res\bmp\undo.bmp" />
+    <EmbeddedResource Include="res\bmp\undrln.bmp" />
+    <EmbeddedResource Include="res\bmp\ungroup.bmp" />
+    <EmbeddedResource Include="res\bmp\up1lvl.bmp" />
+    <EmbeddedResource Include="res\bmp\vw-dtls.bmp" />
+    <EmbeddedResource Include="res\bmp\vw-list.bmp" />
+    <EmbeddedResource Include="res\bmp\vw-lrgic.bmp" />
+    <EmbeddedResource Include="res\bmp\vw-smlic.bmp" />
+    <EmbeddedResource Include="res\bmp\web.bmp" />
+    <EmbeddedResource Include="res\bmp\wordundr.bmp" />
+    <EmbeddedResource Include="res\close_8x8.bmp" />
+    <EmbeddedResource Include="res\compile\compile.bmp" />
+    <EmbeddedResource Include="res\compile\dcompile.bmp" />
+    <EmbeddedResource Include="res\compile\install.bmp" />
+    <EmbeddedResource Include="res\compile\uninstall.bmp" />
+    <EmbeddedResource Include="res\dialog\main.ico" />
+    <EmbeddedResource Include="res\dialog\msi.ico" />
+    <EmbeddedResource Include="res\dialog\source.ico" />
+    <EmbeddedResource Include="res\directory\closed.bmp" />
+    <EmbeddedResource Include="res\directory\open.bmp" />
+    <EmbeddedResource Include="res\elements\adminexecutesequence.bmp" />
+    <EmbeddedResource Include="res\elements\adminuisequence.bmp" />
+    <EmbeddedResource Include="res\elements\advertiseexecutesequence.bmp" />
+    <EmbeddedResource Include="res\elements\component.bmp" />
+    <EmbeddedResource Include="res\elements\componentref.bmp" />
+    <EmbeddedResource Include="res\elements\condition.bmp" />
+    <EmbeddedResource Include="res\elements\control.bmp" />
+    <EmbeddedResource Include="res\elements\createfolder.bmp" />
+    <EmbeddedResource Include="res\elements\custom.bmp" />
+    <EmbeddedResource Include="res\elements\customaction.bmp" />
+    <EmbeddedResource Include="res\elements\dialog.bmp" />
+    <EmbeddedResource Include="res\elements\directory.bmp" />
+    <EmbeddedResource Include="res\elements\directoryref.bmp" />
+    <EmbeddedResource Include="res\elements\empty.bmp" />
+    <EmbeddedResource Include="res\elements\feature.bmp" />
+    <EmbeddedResource Include="res\elements\featureref.bmp" />
+    <EmbeddedResource Include="res\elements\file.bmp" />
+    <EmbeddedResource Include="res\elements\icon.bmp" />
+    <EmbeddedResource Include="res\elements\inifile.bmp" />
+    <EmbeddedResource Include="res\elements\installexecutesequence.bmp" />
+    <EmbeddedResource Include="res\elements\installuisequence.bmp" />
+    <EmbeddedResource Include="res\elements\media.bmp" />
+    <EmbeddedResource Include="res\elements\merge.bmp" />
+    <EmbeddedResource Include="res\elements\package.bmp" />
+    <EmbeddedResource Include="res\elements\product.bmp" />
+    <EmbeddedResource Include="res\elements\publish.bmp" />
+    <EmbeddedResource Include="res\elements\registry.bmp" />
+    <EmbeddedResource Include="res\elements\removefolder.bmp" />
+    <EmbeddedResource Include="res\elements\servicecontrol.bmp" />
+    <EmbeddedResource Include="res\elements\serviceinstall.bmp" />
+    <EmbeddedResource Include="res\elements\shortcut.bmp" />
+    <EmbeddedResource Include="res\elements\show.bmp" />
+    <EmbeddedResource Include="res\elements\subscribe.bmp" />
+    <EmbeddedResource Include="res\elements\text.bmp" />
+    <EmbeddedResource Include="res\elements\unknown.bmp" />
+    <EmbeddedResource Include="res\elements\unsupported.bmp" />
+    <EmbeddedResource Include="res\elements\user.bmp" />
+    <EmbeddedResource Include="res\elements\webdir.bmp" />
+    <EmbeddedResource Include="res\elements\website.bmp" />
+    <EmbeddedResource Include="res\elements\webvirtualdir.bmp" />
+    <EmbeddedResource Include="res\error.png" />
+    <EmbeddedResource Include="res\hcontrolborder.bmp" />
+    <EmbeddedResource Include="res\tabbuttons\actions.png" />
+    <EmbeddedResource Include="res\tabbuttons\dialogs.png" />
+    <EmbeddedResource Include="res\tabbuttons\files.png" />
+    <EmbeddedResource Include="res\tabbuttons\global.png" />
+    <EmbeddedResource Include="res\tabbuttons\properties.png" />
+    <EmbeddedResource Include="res\tabbuttons\resources.png" />
+    <EmbeddedResource Include="res\vcontrolborder.bmp" />
+    <EmbeddedResource Include="res\viewWixXml.xsl" />
+    <EmbeddedResource Include="res\elements\registrykey.bmp" />
+    <EmbeddedResource Include="res\elements\registryvalue.bmp" />
+    <EmbeddedResource Include="src\Wizard\BaseSheet.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>BaseSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Wizard\WizardForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WizardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="res\bmp\wix.bmp" />
+    <EmbeddedResource Include="res\dlgbmp.bmp" />
+    <EmbeddedResource Include="res\bmp\wizard.bmp" />
+    <EmbeddedResource Include="res\directory\drive.bmp" />
+    <EmbeddedResource Include="res\elements\class.bmp" />
+    <EmbeddedResource Include="res\elements\group.bmp" />
+    <EmbeddedResource Include="res\elements\interface.bmp" />
+    <EmbeddedResource Include="res\elements\multistringvalue.bmp" />
+    <EmbeddedResource Include="res\elements\patch.bmp" />
+    <EmbeddedResource Include="res\elements\webapplication.bmp" />
+    <EmbeddedResource Include="res\elements\digitalcertificate.bmp" />
+    <EmbeddedResource Include="res\elements\digitalsignature.bmp" />
+    <EmbeddedResource Include="res\elements\certificate.bmp" />
+    <EmbeddedResource Include="res\elements\certificateref.bmp" />
+    <EmbeddedResource Include="res\elements\complusapplication.bmp" />
+    <EmbeddedResource Include="res\bmp\order.bmp" />
+    <EmbeddedResource Include="res\elements\billboard.bmp" />
+    <EmbeddedResource Include="res\elements\bitmap.bmp" />
+    <EmbeddedResource Include="res\elements\checkbox.bmp" />
+    <EmbeddedResource Include="res\elements\combobox.bmp" />
+    <EmbeddedResource Include="res\elements\directorycombo.bmp" />
+    <EmbeddedResource Include="res\elements\directorylist.bmp" />
+    <EmbeddedResource Include="res\elements\edit.bmp" />
+    <EmbeddedResource Include="res\elements\groupbox.bmp" />
+    <EmbeddedResource Include="res\elements\line.bmp" />
+    <EmbeddedResource Include="res\elements\listbox.bmp" />
+    <EmbeddedResource Include="res\elements\listview.bmp" />
+    <EmbeddedResource Include="res\elements\maskededit.bmp" />
+    <EmbeddedResource Include="res\elements\pathedit.bmp" />
+    <EmbeddedResource Include="res\elements\progressbar.bmp" />
+    <EmbeddedResource Include="res\elements\pushbutton.bmp" />
+    <EmbeddedResource Include="res\elements\radiobutton.bmp" />
+    <EmbeddedResource Include="res\elements\radiobuttongroup.bmp" />
+    <EmbeddedResource Include="res\elements\scrollabletext.bmp" />
+    <EmbeddedResource Include="res\elements\selectiontree.bmp" />
+    <EmbeddedResource Include="res\elements\volumecostList.bmp" />
+    <EmbeddedResource Include="res\elements\volumeselectcombo.bmp" />
+    <EmbeddedResource Include="res\tabbuttons\customtables.png" />
+    <EmbeddedResource Include="res\elements\customtable.bmp" />
+    <EmbeddedResource Include="res\elements\column.bmp" />
+    <EmbeddedResource Include="res\elements\upgrade.bmp" />
+    <EmbeddedResource Include="res\elements\upgradeversion.bmp" />
+    <EmbeddedResource Include="res\elements\compliancecheck.bmp" />
+    <EmbeddedResource Include="res\elements\componentgroup.bmp" />
+    <EmbeddedResource Include="res\elements\customactionref.bmp" />
+    <EmbeddedResource Include="res\elements\copyfile.bmp" />
+    <EmbeddedResource Include="res\elements\extension.bmp" />
+    <EmbeddedResource Include="res\elements\removeregistrykey.bmp" />
+    <EmbeddedResource Include="res\elements\removeregistryvalue.bmp" />
+    <EmbeddedResource Include="res\elements\property.bmp" />
+    <EmbeddedResource Include="res\elements\propertyref.bmp" />
+    <Content Include="src\App.ico" />
+    <Compile Include="src\About\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Controls\CustomTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ErrorProviderFixed.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\FileSelectCell.cs" />
+    <Compile Include="src\Controls\FileSelectColumn.cs" />
+    <Compile Include="src\Controls\FileSelectEditingControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\FolderSelectDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Controls\IconMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\NumericTextBoxCell.cs" />
+    <Compile Include="src\Controls\NumericTextBoxColumn.cs" />
+    <Compile Include="src\Controls\NumericTextBoxEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\OutputTextbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Controls\PictureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\SelectionOverlay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\TabButtonControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\DesignerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\EnterIntegerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\EnterStringForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\OrderItemsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\OrderItemsForm.Designer.cs">
+      <DependentUpon>OrderItemsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Forms\ProductPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\ProjectSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\SelectStringForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Helpers\CopyDataMessenger.cs" />
+    <Compile Include="src\Helpers\NewInstanceStarter.cs" />
+    <Compile Include="src\Helpers\PathHelper.cs" />
+    <Compile Include="src\Helpers\VoidVoidDelegate.cs" />
+    <Compile Include="src\Images\FileIconFactory.cs" />
+    <Compile Include="src\Images\ImageListFactory.cs" />
+    <Compile Include="src\Import\DirectoryImport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Import\FileImport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Import\ImportException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Import\RegistryImport.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Panels\BasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\DialogGenerator.cs" />
+    <Compile Include="src\Panels\DisplayBasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\DisplaySimpleBasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\DisplayTreeBasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditActionsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditBinariesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditCustomActionsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditCustomTableDataPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditCustomTableDefinitionPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditCustomTablePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditDialogPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditErrorPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditExecuteSequencePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditFeaturesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditFilesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditGlobalDataPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditIconsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditInstallDataPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditProgressTextPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditPropertiesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditResourcesPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditUIPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditUISequencePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\EditUITextPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\OutputPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\ResultsPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\Panels\SearchPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\BinaryElementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\BinaryElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ControlTypeTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\CustomDisplayNamePropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\CustomPropertyDescriptorBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\CustomPropertyGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\CustomTableRowElementAdapter.cs" />
+    <Compile Include="src\PropertyGridExtensions\CustomTableRowElementPropertyDescriptor.cs" />
+    <Compile Include="src\PropertyGridExtensions\CustomXmlPropertyDescriptorBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ElementEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ErrorElementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ErrorElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\FileXmlAttributePropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\GuidUITypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\InnerTextPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\IntegerConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\MultiLineUITypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ProgressTextElementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ProgressTextElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\PropertyAdapterBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\PropertyElementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\PropertyElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\PropertySearchElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\ReferenceConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\SearchElementObject.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\SearchElementTypeEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\SimpleTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\UITextElementAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\UITextElementPropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\XmlAttributeAdapter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\PropertyGridExtensions\XmlAttributePropertyDescriptor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Server\ErrorReporter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Server\ErrorReportHandler.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Settings\BinDirectoryStructure.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Settings\BinDirectoryStructureEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Settings\FilteredFileNameEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Settings\SettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Settings\WixEditSettings.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\WixEditException.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\BaseSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\BaseSheet.Designer.cs">
+      <DependentUpon>BaseSheet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Wizard\FileSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\FinishSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\IntroductionSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\SelectTemplatesSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\StepSheet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\WizardForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Wizard\WizardForm.Designer.cs">
+      <DependentUpon>WizardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Xml\ElementLocator.cs" />
+    <Compile Include="src\Xml\IncludeFileChangedException.cs" />
+    <Compile Include="src\Xml\IncludeManager.cs" />
+    <Compile Include="src\Xml\UndoManager.cs" />
+    <Compile Include="src\Xml\WixFiles.cs" />
+    <Compile Include="src\Xml\XmlDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Xml\XmlDocumentationManager.cs" />
+    <Compile Include="src\Xml\XPathHelper.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>
