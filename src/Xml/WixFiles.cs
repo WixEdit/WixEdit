@@ -39,7 +39,8 @@ namespace WixEdit.Xml
         FileInfo wxsFile;
 
         UndoManager undoManager;
-        IncludeManager includeManager;
+		DefineManager defineManager;
+		IncludeManager includeManager;
 
         XmlDocument wxsDocument;
         XmlNamespaceManager wxsNsmgr;
@@ -263,9 +264,15 @@ namespace WixEdit.Xml
                 wxsNsmgr.AddNamespace(LookupExtensionNameReverse((string)entry.Key), (string)entry.Value);
             }
 
+			//init define manager to allow include manager to add dynamic includes
+			defineManager = new DefineManager(this, wxsDocument);
+
             // Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
             includeManager = new IncludeManager(this, wxsDocument);
-        }
+
+			//re-init define manager using final includes
+			defineManager = new DefineManager(this, wxsDocument);
+		}
 
         public void LoadNewWxsFile(string xml)
         {
@@ -372,9 +379,15 @@ namespace WixEdit.Xml
                 wxsNsmgr.AddNamespace(LookupExtensionNameReverse((string)entry.Key), (string)entry.Value);
             }
 
-            // Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
-            includeManager = new IncludeManager(this, wxsDocument);
-        }
+			//init define manager to allow include manager to add dynamic includes
+			defineManager = new DefineManager(this, wxsDocument);
+
+			// Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
+			includeManager = new IncludeManager(this, wxsDocument);
+
+			//re-init define manager using final includes
+			defineManager = new DefineManager(this, wxsDocument);
+		}
 
         public bool IsNew
         {
@@ -392,7 +405,15 @@ namespace WixEdit.Xml
             }
         }
 
-        public IncludeManager IncludeManager
+		public DefineManager DefineManager
+		{
+			get
+			{
+				return defineManager;
+			}
+		}
+
+		public IncludeManager IncludeManager
         {
             get
             {

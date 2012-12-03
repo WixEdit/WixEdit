@@ -74,6 +74,7 @@ namespace WixEdit.Xml
                 foreach (XmlProcessingInstruction include in includes)
                 {
                     string data = include.Data.Trim('"', '\r', '\n', ' ');
+					data = wixFiles.DefineManager.ApplyDefines(data, wixFiles.WxsFile != null ? wixFiles.WxsFile.FullName : null);
                     if (Path.IsPathRooted(data) == false)
                     {
                         data = Path.Combine(wixFiles.WxsDirectory.FullName, data);
