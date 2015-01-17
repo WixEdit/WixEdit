@@ -192,6 +192,9 @@ namespace WixEdit.Settings {
 
             public ArrayList IgnoreFilesAndDirectories;
         }
+
+       
+
         public class EditDialogData {
             public int SnapToGrid = 5;
             public double Scale = 1.00;
@@ -495,7 +498,10 @@ namespace WixEdit.Settings {
             
             return true;
         }
-
+        public bool IsUsingWix4()
+        {
+            return WixBinariesVersion.StartsWith("4");
+        }
         public bool IsUsingWix2() {
             return WixBinariesVersion.StartsWith("2");
         }
