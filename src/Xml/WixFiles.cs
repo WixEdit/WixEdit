@@ -99,6 +99,26 @@ namespace WixEdit.Xml
             ReloadXsd();
         }
 
+        public static WixFiles FromTemplate()
+        {
+            return new WixFiles(string.Format(@"<?xml version=""1.0"" encoding=""utf-8""?>
+<Wix xmlns=""{2}"">
+  <Product Id=""{0}"" Name=""TestProduct"" Language=""1033"" Version=""0.0.0.1"" Manufacturer=""WixEdit"" UpgradeCode=""{1}"">
+    <Package Description=""Test file in a Product"" Comments=""Simple test"" InstallerVersion=""200"" Compressed=""yes"" />
+    <Media Id=""1"" Cabinet=""simple.cab"" EmbedCab=""yes"" />
+    <Directory Id=""TARGETDIR"" Name=""SourceDir"">
+      <Directory Id=""ProgramFilesFolder"" Name=""PFiles"" />
+    </Directory>
+    <Feature Id=""DefaultFeature"" Title=""Main Feature"" Level=""1"">
+    </Feature>
+    <UI />
+  </Product>
+</Wix>",
+Guid.NewGuid().ToString().ToUpper(),
+Guid.NewGuid().ToString().ToUpper(),
+WixFiles.WixNamespaceUri));
+        }
+
         public WixFiles(string xml)
         {
             LoadNewWxsFile(xml);
