@@ -39,8 +39,8 @@ namespace WixEdit.Xml
         FileInfo wxsFile;
 
         UndoManager undoManager;
-		DefineManager defineManager;
-		IncludeManager includeManager;
+        DefineManager defineManager;
+        IncludeManager includeManager;
 
         XmlDocument wxsDocument;
         XmlNamespaceManager wxsNsmgr;
@@ -78,20 +78,45 @@ namespace WixEdit.Xml
                 {
                     return WixNamespaceUri_V2;
                 }
+                else if (WixEditSettings.Instance.IsUsingWix4())
+                {
+                    return WixNamespaceUri_V4;
+                }
                 else
-                { // Default is WiX 2.0, because 3.0 is unstable.
-                    return WixNamespaceUri_V2;
+                {
+                    return WixNamespaceUri_V3;
                 }
             }
         }
         public static string WixNamespaceUri_V2 = "http://schemas.microsoft.com/wix/2003/01/wi";
         public static string WixNamespaceUri_V3 = "http://schemas.microsoft.com/wix/2006/wi";
+        public static string WixNamespaceUri_V4 = "http://wixtoolset.org/schemas/v4/wxs";
 
         private string customLightArgumentsWarning;
 
         static WixFiles()
         {
             ReloadXsd();
+        }
+
+        public static WixFiles FromTemplate()
+        {
+            return new WixFiles(string.Format(@"<?xml version=""1.0"" encoding=""utf-8""?>
+<Wix xmlns=""{2}"">
+  <Product Id=""{0}"" Name=""TestProduct"" Language=""1033"" Version=""0.0.0.1"" Manufacturer=""WixEdit"" UpgradeCode=""{1}"">
+    <Package Description=""Test file in a Product"" Comments=""Simple test"" InstallerVersion=""200"" Compressed=""yes"" />
+    <Media Id=""1"" Cabinet=""simple.cab"" EmbedCab=""yes"" />
+    <Directory Id=""TARGETDIR"" Name=""SourceDir"">
+      <Directory Id=""ProgramFilesFolder"" Name=""PFiles"" />
+    </Directory>
+    <Feature Id=""DefaultFeature"" Title=""Main Feature"" Level=""1"">
+    </Feature>
+    <UI />
+  </Product>
+</Wix>",
+Guid.NewGuid().ToString().ToUpper(),
+Guid.NewGuid().ToString().ToUpper(),
+WixFiles.WixNamespaceUri));
         }
 
         public WixFiles(string xml)
@@ -264,15 +289,15 @@ namespace WixEdit.Xml
                 wxsNsmgr.AddNamespace(LookupExtensionNameReverse((string)entry.Key), (string)entry.Value);
             }
 
-			//init define manager to allow include manager to add dynamic includes
-			defineManager = new DefineManager(this, wxsDocument);
+            //init define manager to allow include manager to add dynamic includes
+            defineManager = new DefineManager(this, wxsDocument);
 
             // Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
             includeManager = new IncludeManager(this, wxsDocument);
 
-			//re-init define manager using final includes
-			defineManager = new DefineManager(this, wxsDocument);
-		}
+            //re-init define manager using final includes
+            defineManager = new DefineManager(this, wxsDocument);
+        }
 
         public void LoadNewWxsFile(string xml)
         {
@@ -379,15 +404,15 @@ namespace WixEdit.Xml
                 wxsNsmgr.AddNamespace(LookupExtensionNameReverse((string)entry.Key), (string)entry.Value);
             }
 
-			//init define manager to allow include manager to add dynamic includes
-			defineManager = new DefineManager(this, wxsDocument);
+            //init define manager to allow include manager to add dynamic includes
+            defineManager = new DefineManager(this, wxsDocument);
 
-			// Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
-			includeManager = new IncludeManager(this, wxsDocument);
+            // Init IncludeManager after all doc.LoadXml(doc.OuterXml), because all references to nodes would dissapear!
+            includeManager = new IncludeManager(this, wxsDocument);
 
-			//re-init define manager using final includes
-			defineManager = new DefineManager(this, wxsDocument);
-		}
+            //re-init define manager using final includes
+            defineManager = new DefineManager(this, wxsDocument);
+        }
 
         public bool IsNew
         {
@@ -405,15 +430,15 @@ namespace WixEdit.Xml
             }
         }
 
-		public DefineManager DefineManager
-		{
-			get
-			{
-				return defineManager;
-			}
-		}
+        public DefineManager DefineManager
+        {
+            get
+            {
+                return defineManager;
+            }
+        }
 
-		public IncludeManager IncludeManager
+        public IncludeManager IncludeManager
         {
             get
             {
@@ -1128,7 +1153,7 @@ namespace WixEdit.Xml
             Form mainForm = FindForm();
 
             // Make it happen on the correct thread.
-            mainForm.Invoke(new ThreadStart(delegate() { OnWxsChanged(); }));
+            mainForm.Invoke(new ThreadStart(delegate () { OnWxsChanged(); }));
         }
 
         private void OnWxsChanged()
