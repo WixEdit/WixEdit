@@ -1,6 +1,8 @@
-## first import (2012-11-30)
+# 0.7.6 (Release Date TBD)
 
-* import of source code from checkout of https://wixedit.svn.sourceforge.net/svnroot/wixedit/trunk/wixedit revision 259
-* applied fixes for the following issues:
- *  3095459: Drag and drop from explorer, http://sourceforge.net/tracker/?func=detail&aid=3095459&group_id=133314&atid=726878
- *  3411739: Add "New empty file" menu entry, http://sourceforge.net/tracker/?func=detail&aid=3411739&group_id=133314&atid=726878
+* Fixed [Bug #94](https://sourceforge.net/p/wixedit/bugs/94/): Persist list of components in "Select components" dialog when losing focus [@icnocop](https://github.com/icnocop)
+* Fixed [Issue #2](https://github.com/sebasbaumh/WixEdit/issues/2): Added ability to select all components in the "Select components" dialog [@icnocop](https://github.com/icnocop)
+* Wix Version 4.0 support [@ChrisRichner](https://github.com/ChrisRichner)
+* Add "New empty file" menu entry [Patch #4](https://sourceforge.net/p/wixedit/patches/4/) [@sebasbaumh](https://github.com/sebasbaumh)
+* Drag and drop from explorer [Patch #3](https://sourceforge.net/p/wixedit/patches/3/) [@sebasbaumh](https://github.com/sebasbaumh)
+* Imported source code from [SourceForge](https://svn.code.sf.net/p/wixedit/code/trunk/wixedit/) (revision 259, 2012-11-30) [@sebasbaumh](https://github.com/sebasbaumh)

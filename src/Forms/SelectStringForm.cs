@@ -1,4 +1,4 @@
-// deal in the Software without restriction, including without limitation the 
+﻿// deal in the Software without restriction, including without limitation the 
 // rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
 // sell copies of the Software, and to permit persons to whom the Software is 
 // furnished to do so, subject to the following conditions:
@@ -16,7 +16,6 @@
 
 
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace WixEdit.Forms
@@ -24,83 +23,20 @@ namespace WixEdit.Forms
     /// <summary>
     /// Form to enter strings.
     /// </summary>
-    public class SelectStringForm : Form
+    public partial class SelectStringForm : Form
     {
-        protected Button ButtonOk;
-        protected Button ButtonCancel;
-        protected ListBox StringList;
-
-        protected string[] selectedStrings;
-        protected string[] possibleStrings;
-
         public SelectStringForm()
         {
-            InitializeComponent("New Attribute Name");
+            InitializeComponent();
+
+            this.AcceptButton = ButtonOk;
+            this.CancelButton = ButtonCancel;
         }
 
         public SelectStringForm(string title)
+            : this()
         {
-            InitializeComponent(title);
-        }
-
-        private void InitializeComponent(string title)
-        {
-            Text = title;
-            ShowInTaskbar = false;
-
-            ButtonOk = new Button();
-            ButtonCancel = new Button();
-            StringList = new ListBox();
-            
-            ClientSize = new Size(ButtonCancel.Width + 2 + ButtonOk.Width, 262);
-            MinimumSize = new Size(ButtonCancel.Width + 2 + ButtonOk.Width, 262);
-
-            ButtonOk.Text = "Ok";
-            ButtonOk.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            ButtonOk.Location = new Point(0, 262 - ButtonOk.Height);
-            ButtonOk.FlatStyle = FlatStyle.System;
-            ButtonOk.Click += new EventHandler(OnOk);
-            ButtonOk.Enabled = false;
-            Controls.Add(ButtonOk);
-
-            ButtonCancel.Text = "Cancel";
-            ButtonCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-            ButtonCancel.Location = new Point(2 + ButtonOk.Width, 262 - ButtonOk.Height);
-            ButtonCancel.FlatStyle = FlatStyle.System;
-            Controls.Add(ButtonCancel);
-
-            StringList.Dock = DockStyle.Fill;
-            StringList.SelectionMode = SelectionMode.MultiSimple;
-            StringList.DoubleClick += new EventHandler(OnDoubleClickList);
-            StringList.SelectedValueChanged += new EventHandler(OnSelectionChanged);
-            Controls.Add(StringList);
-
-            StringList.Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom;
-            StringList.Size = new Size(ButtonCancel.Width + 2 + ButtonOk.Width, 238);
-
-            FormBorderStyle = FormBorderStyle.SizableToolWindow;
-
-            AcceptButton = ButtonOk;
-            CancelButton = ButtonCancel;
-
-            MaximizeBox = false;
-            MinimizeBox = false;
-            ControlBox = false;
-
-            StartPosition = FormStartPosition.CenterParent;
-
-            Activated += new EventHandler(OnActivate);
-        }
-
-        private void OnActivate(object sender, EventArgs e)
-        {
-            StringList.Items.Clear();
-            foreach (string it in possibleStrings)
-            {
-                StringList.Items.Add(it);
-            }
-
-            UpdateOkButton();
+            this.Text = title;
         }
 
         private void OnSelectionChanged(object sender, EventArgs e)
@@ -120,33 +56,12 @@ namespace WixEdit.Forms
             }
         }
 
-        public string[] SelectedStrings
-        {
-            get
-            {
-                return selectedStrings;
-            }
-            set
-            {
-                selectedStrings = value;
-            }
-        }
-
-        public string[] PossibleStrings
-        {
-            get
-            {
-                return possibleStrings;
-            }
-            set
-            {
-                possibleStrings = value;
-            }
-        }
+        public string[] SelectedStrings { get; set; }
+        public string[] PossibleStrings { get; set; }
 
         private void OnOk(object sender, EventArgs e)
         {
-            selectedStrings = FillSelectedString();
+            this.SelectedStrings = FillSelectedString();
             DialogResult = DialogResult.OK;
         }
 
@@ -156,7 +71,7 @@ namespace WixEdit.Forms
             // but just pretend if we do... ;) and only with one item.
             if (StringList.SelectedItem != null && StringList.SelectedItems.Count == 1)
             {
-                selectedStrings = FillSelectedString();
+                this.SelectedStrings = FillSelectedString();
                 DialogResult = DialogResult.OK;
             }
         }
@@ -171,6 +86,17 @@ namespace WixEdit.Forms
                 i++;
             }
             return strArray;
+        }
+
+        private void OnLoad(object sender, EventArgs e)
+        {
+            StringList.Items.Clear();
+            foreach (string it in this.PossibleStrings)
+            {
+                StringList.Items.Add(it);
+            }
+
+            UpdateOkButton();
         }
     }
 }

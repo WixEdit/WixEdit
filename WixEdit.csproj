@@ -360,6 +360,9 @@
     <Compile Include="src\Forms\SelectStringForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\Forms\SelectStringForm.Designer.cs">
+      <DependentUpon>SelectStringForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Helpers\CopyDataMessenger.cs" />
     <Compile Include="src\Helpers\NewInstanceStarter.cs" />
     <Compile Include="src\Helpers\PathHelper.cs" />
@@ -613,7 +616,9 @@
     <Compile Include="src\Xml\XPathHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
