@@ -15,6 +15,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		WixEdit.version.xml = WixEdit.version.xml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "installer", "installer", "{7F35C77A-8939-4889-8A19-94FCB1127222}"
+	ProjectSection(SolutionItems) = preProject
+		installer\Dialogs.wxi = installer\Dialogs.wxi
+		installer\license.rtf = installer\license.rtf
+		installer\WixEdit Homepage.url = installer\WixEdit Homepage.url
+		installer\WixEdit.wxs = installer\WixEdit.wxs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binary", "Binary", "{C6787DC3-CDA5-41E8-A048-7658A7AA6461}"
+	ProjectSection(SolutionItems) = preProject
+		installer\Binary\bannrbmp.bmp = installer\Binary\bannrbmp.bmp
+		installer\Binary\completi.ico = installer\Binary\completi.ico
+		installer\Binary\custicon.ico = installer\Binary\custicon.ico
+		installer\Binary\dlgbmp.bmp = installer\Binary\dlgbmp.bmp
+		installer\Binary\exclamic.ico = installer\Binary\exclamic.ico
+		installer\Binary\info.ico = installer\Binary\info.ico
+		installer\Binary\insticon.ico = installer\Binary\insticon.ico
+		installer\Binary\New.ico = installer\Binary\New.ico
+		installer\Binary\removico.ico = installer\Binary\removico.ico
+		installer\Binary\repairic.ico = installer\Binary\repairic.ico
+		installer\Binary\Up.ico = installer\Binary\Up.ico
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,5 +51,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7F35C77A-8939-4889-8A19-94FCB1127222} = {6ECAF58F-5D73-49FC-93EE-D1F6687BB97A}
+		{C6787DC3-CDA5-41E8-A048-7658A7AA6461} = {7F35C77A-8939-4889-8A19-94FCB1127222}
 	EndGlobalSection
 EndGlobal

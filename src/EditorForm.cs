@@ -674,7 +674,7 @@ namespace WixEdit
                 return;
             }
 
-            openWxsFileDialog.Filter = "WiX Files (*.xml;*.wxs)|*.XML;*.WXS|MSI Files (*.msi;*.msm)|*.MSI;*.MSM|All files (*.*)|*.*";
+            openWxsFileDialog.Filter = "WiX Files (*.xml;*.wxs;*.wxi)|*.XML;*.WXS;*.WXI|MSI Files (*.msi;*.msm)|*.MSI;*.MSM|All files (*.*)|*.*";
             openWxsFileDialog.RestoreDirectory = true;
 
             if (openWxsFileDialog.ShowDialog() == DialogResult.OK)

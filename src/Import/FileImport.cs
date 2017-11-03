@@ -188,5 +188,88 @@ namespace WixEdit.Import
 
             return newId;
         }
+
+        public static void AddFiles(WixFiles wixFiles, string[] files, TreeNode treeNode, XmlNode parentDirectoryElement)
+        {
+            foreach (string file in files)
+            {
+                FileInfo fileInfo = new FileInfo(file);
+
+                if (NeedToIgnore(fileInfo.Name))
+                {
+                    continue;
+                }
+
+                XmlElement newComponentElement = parentDirectoryElement.OwnerDocument.CreateElement("Component", WixFiles.WixNamespaceUri);
+
+                newComponentElement.SetAttribute("Id", FileImport.GenerateValidIdentifier(fileInfo.Name, newComponentElement, wixFiles));
+                newComponentElement.SetAttribute("DiskId", "1");
+                newComponentElement.SetAttribute("Guid", Guid.NewGuid().ToString().ToUpper());
+
+                parentDirectoryElement.AppendChild(newComponentElement);
+
+                TreeNode newComponentNode = new TreeNode(newComponentElement.GetAttribute("Id"));
+                newComponentNode.Tag = newComponentElement;
+
+                int imageIndex = ImageListFactory.GetImageIndex("Component");
+                if (imageIndex >= 0)
+                {
+                    newComponentNode.ImageIndex = imageIndex;
+                    newComponentNode.SelectedImageIndex = imageIndex;
+                }
+
+                treeNode.Nodes.Add(newComponentNode);
+
+                XmlElement newFileElement = parentDirectoryElement.OwnerDocument.CreateElement("File", WixFiles.WixNamespaceUri);
+
+                newFileElement.SetAttribute("Id", FileImport.GenerateValidIdentifier(fileInfo.Name, newFileElement, wixFiles));
+                newFileElement.SetAttribute(WixEditSettings.Instance.LongName, FileImport.GenerateValidLongName(fileInfo.Name));
+                if (WixEditSettings.Instance.IsUsingWix2())
+                {
+                    newFileElement.SetAttribute(WixEditSettings.Instance.ShortName, FileImport.GenerateValidShortName(PathHelper.GetShortFileName(fileInfo, wixFiles, newComponentElement)));
+                }
+                newFileElement.SetAttribute("Source", PathHelper.GetRelativePath(fileInfo.FullName, wixFiles));
+
+                TreeNode newFileNode = new TreeNode(newFileElement.GetAttribute(WixEditSettings.Instance.LongName));
+                newFileNode.Tag = newFileElement;
+
+                imageIndex = ImageListFactory.GetImageIndex("File");
+                if (imageIndex >= 0)
+                {
+                    newFileNode.ImageIndex = imageIndex;
+                    newFileNode.SelectedImageIndex = imageIndex;
+                }
+
+                XmlNodeList sameNodes = newComponentElement.SelectNodes("wix:File", wixFiles.WxsNsmgr);
+                if (sameNodes.Count > 0)
+                {
+                    newComponentElement.InsertAfter(newFileElement, sameNodes[sameNodes.Count - 1]);
+                }
+                else
+                {
+                    newComponentElement.AppendChild(newFileElement);
+                }
+
+                newComponentNode.Nodes.Add(newFileNode);
+            }
+        }
+
+        public static bool NeedToIgnore(string fileOrDir)
+        {
+            bool ignoreThis = false;
+            foreach (string test in WixEdit.Settings.WixEditSettings.Instance.IgnoreFilesAndDirectories)
+            {
+                string escapedTest = Regex.Escape(test);
+                escapedTest = escapedTest.Replace("\\*", ".*");
+                escapedTest = String.Format("^{0}$", escapedTest);
+                if (Regex.IsMatch(fileOrDir, escapedTest, RegexOptions.IgnoreCase))
+                {
+                    ignoreThis = true;
+                    break;
+                }
+            }
+
+            return ignoreThis;
+        }
     }
 }

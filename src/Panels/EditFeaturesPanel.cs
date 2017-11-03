@@ -21,10 +21,10 @@
 
 using System;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.Xml;
 using System.Windows.Forms;
+using System.Linq;
 
 using WixEdit.Xml;
 using WixEdit.Forms;
@@ -79,7 +79,12 @@ namespace WixEdit.Panels
                 if (component.Attributes["Id"] != null &&
                     component.Attributes["Id"].Value != String.Empty)
                 {
-                    componentIds.Add(component.Attributes["Id"].Value);
+                    string name = component.Attributes["Id"].Value;
+
+                    if (!node.ChildNodes.Cast<XmlNode>().Any(x => GetDisplayName(x) == name))
+                    {
+                        componentIds.Add(name);
+                    }
                 }
             }
 

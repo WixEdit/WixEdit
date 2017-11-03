@@ -1,5 +1,8 @@
 # 0.7.6 (Release Date TBD)
 
+* "Select components" dialog excludes components that already exist [@icnocop](https://github.com/icnocop)
+* "File > Open" menu item can open *.wxi files by default [@icnocop](https://github.com/icnocop)
+* Added support for importing additional files within a directory [@icnocop](https://github.com/icnocop)
 * Fixed [Bug #94](https://sourceforge.net/p/wixedit/bugs/94/): Persist list of components in "Select components" dialog when losing focus [@icnocop](https://github.com/icnocop)
 * Fixed [Issue #2](https://github.com/sebasbaumh/WixEdit/issues/2): Added ability to select all components in the "Select components" dialog [@icnocop](https://github.com/icnocop)
 * Wix Version 4.0 support [@ChrisRichner](https://github.com/ChrisRichner)

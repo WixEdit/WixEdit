@@ -213,6 +213,36 @@ namespace WixEdit.Settings {
             LoadFromDisk();
         }
 
+        public string ShortName
+        {
+            get
+            {
+                if (this.IsUsingWix2())
+                {
+                    return "Name";
+                }
+                else
+                {
+                    return "ShortName";
+                }
+            }
+        }
+
+        public string LongName
+        {
+            get
+            {
+                if (this.IsUsingWix2())
+                {
+                    return "LongName";
+                }
+                else
+                {
+                    return "Name";
+                }
+            }
+        }
+
         public WixEditData GetInternalDataStructure() {
             return data;
         }

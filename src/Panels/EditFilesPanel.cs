@@ -58,13 +58,15 @@ namespace WixEdit.Panels
 
         protected override void AddCustomTreeViewContextMenuItems(XmlNode node, ContextMenu treeViewContextMenu)
         {
-            if (node.Name == "Component")
+            if ((node.Name == "Component")
+                || (node.Name == "Directory"))
             {
                 IconMenuItem importFilesMenu = new IconMenuItem("&Import Files", new Bitmap(WixFiles.GetResourceStream("bmp.import.bmp")));
                 importFilesMenu.Click += new System.EventHandler(ImportFiles_Click);
                 treeViewContextMenu.MenuItems.Add(1, importFilesMenu);
             }
-            else if (node.Name == "Directory")
+
+            if (node.Name == "Directory")
             {
                 IconMenuItem importFolderMenu = new IconMenuItem("&Import Folder", new Bitmap(WixFiles.GetResourceStream("bmp.import.bmp")));
                 importFolderMenu.Click += new System.EventHandler(ImportFolder_Click);
@@ -278,7 +280,11 @@ namespace WixEdit.Panels
 
         private void ImportFilesInComponent(TreeNode node, XmlNode componentNode, string[] files)
         {
-            if (componentNode.Name == "Component")
+            if (componentNode.Name == "Directory")
+            {
+                FileImport.AddFiles(WixFiles, files, node, componentNode);
+            }
+            else if (componentNode.Name == "Component")
             {
                 bool mustExpand = (node.Nodes.Count == 0);
 

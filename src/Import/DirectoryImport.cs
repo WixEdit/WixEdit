@@ -42,25 +42,11 @@ namespace WixEdit.Import
         XmlNode directoryElement;
         TreeNode firstShowableNode;
 
-        string ShortName;
-        string LongName;
-
         public DirectoryImport(WixFiles wixFiles, string[] folders, XmlNode directoryElement)
         {
             this.wixFiles = wixFiles;
             this.folders = folders;
             this.directoryElement = directoryElement;
-
-            if (WixEditSettings.Instance.IsUsingWix2())
-            {
-                this.ShortName = "Name";
-                this.LongName = "LongName";
-            }
-            else
-            {
-                this.ShortName = "ShortName";
-                this.LongName = "Name";
-            }
         }
 
         public void Import(TreeNode treeNode)
@@ -73,31 +59,13 @@ namespace WixEdit.Import
             }
         }
 
-        private bool NeedToIgnore(string fileOrDir)
-        {
-            bool ignoreThis = false;
-            foreach (string test in WixEdit.Settings.WixEditSettings.Instance.IgnoreFilesAndDirectories)
-            {
-                string escapedTest = Regex.Escape(test);
-                escapedTest = escapedTest.Replace("\\*", ".*");
-                escapedTest = String.Format("^{0}$", escapedTest);
-                if (Regex.IsMatch(fileOrDir, escapedTest, RegexOptions.IgnoreCase))
-                {
-                    ignoreThis = true;
-                    break;
-                }
-            }
-
-            return ignoreThis;
-        }
-
         private void RecurseDirectories(string[] subFolders, TreeNode treeNode, XmlNode parentDirectoryElement)
         {
             foreach (string folder in subFolders)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(folder);
 
-                if (NeedToIgnore(dirInfo.Name))
+                if (FileImport.NeedToIgnore(dirInfo.Name))
                 {
                     continue;
                 }
@@ -106,13 +74,13 @@ namespace WixEdit.Import
 
                 newElement.SetAttribute("Id", FileImport.GenerateValidIdentifier(dirInfo.Name, newElement, wixFiles));
 
-                newElement.SetAttribute(LongName, FileImport.GenerateValidLongName(dirInfo.Name));
+                newElement.SetAttribute(WixEditSettings.Instance.LongName, FileImport.GenerateValidLongName(dirInfo.Name));
                 if (WixEditSettings.Instance.IsUsingWix2())
                 {
-                    newElement.SetAttribute(ShortName, FileImport.GenerateValidShortName(PathHelper.GetShortDirectoryName(dirInfo, wixFiles, parentDirectoryElement)));
+                    newElement.SetAttribute(WixEditSettings.Instance.ShortName, FileImport.GenerateValidShortName(PathHelper.GetShortDirectoryName(dirInfo, wixFiles, parentDirectoryElement)));
                 }
 
-                TreeNode newNode = new TreeNode(newElement.GetAttribute(LongName));
+                TreeNode newNode = new TreeNode(newElement.GetAttribute(WixEditSettings.Instance.LongName));
                 newNode.Tag = newElement;
 
                 if (firstShowableNode == null)
@@ -142,76 +110,11 @@ namespace WixEdit.Import
                 string[] subFiles = Directory.GetFiles(dirInfo.FullName);
                 if (subFiles.Length > 0)
                 {
-                    AddFiles(subFiles, newNode, newElement, dirInfo);
+                    FileImport.AddFiles(wixFiles, subFiles, newNode, newElement);
                 }
 
                 string[] subSubFolders = Directory.GetDirectories(dirInfo.FullName);
                 RecurseDirectories(subSubFolders, newNode, newElement);
-            }
-        }
-
-        private void AddFiles(string[] files, TreeNode treeNode, XmlNode parentDirectoryElement, DirectoryInfo dirInfo)
-        {
-            foreach (string file in files)
-            {
-                FileInfo fileInfo = new FileInfo(file);
-
-                if (NeedToIgnore(fileInfo.Name))
-                {
-                    continue;
-                }
-
-                XmlElement newComponentElement = parentDirectoryElement.OwnerDocument.CreateElement("Component", WixFiles.WixNamespaceUri);
-
-                newComponentElement.SetAttribute("Id", FileImport.GenerateValidIdentifier(fileInfo.Name, newComponentElement, wixFiles));
-                newComponentElement.SetAttribute("DiskId", "1");
-                newComponentElement.SetAttribute("Guid", Guid.NewGuid().ToString().ToUpper());
-
-                parentDirectoryElement.AppendChild(newComponentElement);
-
-                TreeNode newComponentNode = new TreeNode(newComponentElement.GetAttribute("Id"));
-                newComponentNode.Tag = newComponentElement;
-
-                int imageIndex = ImageListFactory.GetImageIndex("Component");
-                if (imageIndex >= 0)
-                {
-                    newComponentNode.ImageIndex = imageIndex;
-                    newComponentNode.SelectedImageIndex = imageIndex;
-                }
-
-                treeNode.Nodes.Add(newComponentNode);
-
-                XmlElement newFileElement = parentDirectoryElement.OwnerDocument.CreateElement("File", WixFiles.WixNamespaceUri);
-
-                newFileElement.SetAttribute("Id", FileImport.GenerateValidIdentifier(fileInfo.Name, newFileElement, wixFiles));
-                newFileElement.SetAttribute(LongName, FileImport.GenerateValidLongName(fileInfo.Name));
-                if (WixEditSettings.Instance.IsUsingWix2())
-                {
-                    newFileElement.SetAttribute(ShortName, FileImport.GenerateValidShortName(PathHelper.GetShortFileName(fileInfo, wixFiles, newComponentElement)));
-                }
-                newFileElement.SetAttribute("Source", PathHelper.GetRelativePath(fileInfo.FullName, wixFiles));
-
-                TreeNode newFileNode = new TreeNode(newFileElement.GetAttribute(LongName));
-                newFileNode.Tag = newFileElement;
-
-                imageIndex = ImageListFactory.GetImageIndex("File");
-                if (imageIndex >= 0)
-                {
-                    newFileNode.ImageIndex = imageIndex;
-                    newFileNode.SelectedImageIndex = imageIndex;
-                }
-
-                XmlNodeList sameNodes = newComponentElement.SelectNodes("wix:File", wixFiles.WxsNsmgr);
-                if (sameNodes.Count > 0)
-                {
-                    newComponentElement.InsertAfter(newFileElement, sameNodes[sameNodes.Count - 1]);
-                }
-                else
-                {
-                    newComponentElement.AppendChild(newFileElement);
-                }
-
-                newComponentNode.Nodes.Add(newFileNode);
             }
         }
     }
