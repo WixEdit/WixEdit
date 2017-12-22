@@ -492,9 +492,16 @@ namespace WixEdit.Panels
 
                 activeProcess = Process.Start(processStartInfo);
 
-                ReadStandardOut();
+                Thread readStandardOut = new Thread(new ThreadStart(ReadStandardOut));
+                Thread readStandardError = new Thread(new ThreadStart(ReadStandardError));
+
+                readStandardOut.Start();
+                readStandardError.Start();
 
                 activeProcess.WaitForExit();
+
+                readStandardOut.Join();
+                readStandardError.Join();
 
                 if (activeProcess.ExitCode != 0)
                 {
@@ -594,7 +601,14 @@ namespace WixEdit.Panels
 
             activeProcess = Process.Start(currentProcessStartInfo);
 
-            ReadStandardOut();
+            Thread readStandardOut = new Thread(new ThreadStart(ReadStandardOut));
+            Thread readStandardError = new Thread(new ThreadStart(ReadStandardError));
+
+            readStandardOut.Start();
+            readStandardError.Start();
+
+            readStandardOut.Join();
+            readStandardError.Join();
 
             activeProcess.WaitForExit();
 
@@ -737,9 +751,24 @@ namespace WixEdit.Panels
                 string line;
                 using (StreamReader sr = activeProcess.StandardOutput)
                 {
-                    while ((line = sr.ReadLine()) != null && isCancelled == false && activeProcess.HasExited == false)
+                    while ((line = sr.ReadLine()) != null)
                     {
                         Invoke(invokeOutputLine, new object[] { line, false });
+                    }
+                }
+            }
+        }
+
+        private void ReadStandardError()
+        {
+            if (activeProcess != null)
+            {
+                string line;
+                using (StreamReader sr = activeProcess.StandardError)
+                {
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        Invoke(invokeOutputLine, new object[] { line, true });
                     }
                 }
             }

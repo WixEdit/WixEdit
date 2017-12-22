@@ -1364,7 +1364,7 @@ namespace WixEdit
             psiCandle.CreateNoWindow = true;
             psiCandle.UseShellExecute = false;
             psiCandle.RedirectStandardOutput = true;
-            psiCandle.RedirectStandardError = false;
+            psiCandle.RedirectStandardError = true;
             psiCandle.Arguments = wixFiles.GetCandleArguments();
 
             string lightExe = WixEditSettings.Instance.WixBinariesDirectory.Light;
@@ -1379,7 +1379,7 @@ namespace WixEdit
             psiLight.CreateNoWindow = true;
             psiLight.UseShellExecute = false;
             psiLight.RedirectStandardOutput = true;
-            psiLight.RedirectStandardError = false;
+            psiLight.RedirectStandardError = true;
             psiLight.Arguments = wixFiles.GetLightArguments();
 
             ShowOutputPanel();
@@ -1404,7 +1404,7 @@ namespace WixEdit
             psiDark.CreateNoWindow = true;
             psiDark.UseShellExecute = false;
             psiDark.RedirectStandardOutput = true;
-            psiDark.RedirectStandardError = false;
+            psiDark.RedirectStandardError = true;
             psiDark.Arguments = String.Format("-nologo -x \"{0}\" \"{1}\" \"{2}\"", msiFile.DirectoryName, msiFile.FullName, Path.ChangeExtension(msiFile.FullName, "wxs"));
 
             ShowOutputPanel();
