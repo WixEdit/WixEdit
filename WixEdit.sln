@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Binary", "Binary", "{C6787D
 		installer\Binary\Up.ico = installer\Binary\Up.ico
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{0B2449F2-3BB2-4A37-B36B-CE4D67C410D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{34D47764-B2F0-4BB6-BD84-C47DD3DCA20F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34D47764-B2F0-4BB6-BD84-C47DD3DCA20F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34D47764-B2F0-4BB6-BD84-C47DD3DCA20F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B2449F2-3BB2-4A37-B36B-CE4D67C410D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B2449F2-3BB2-4A37-B36B-CE4D67C410D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B2449F2-3BB2-4A37-B36B-CE4D67C410D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B2449F2-3BB2-4A37-B36B-CE4D67C410D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

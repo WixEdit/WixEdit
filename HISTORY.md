@@ -1,5 +1,6 @@
 # 0.7.6 (Release Date TBD)
 
+* Preserving white space in attribute values when saving the file [Feature Request #69](https://sourceforge.net/p/wixedit/feature-requests/69/) [@icnocop](https://github.com/icnocop)
 * "Select components" dialog excludes components that already exist [@icnocop](https://github.com/icnocop)
 * "File > Open" menu item can open *.wxi files by default [@icnocop](https://github.com/icnocop)
 * Added support for importing additional files within a directory [@icnocop](https://github.com/icnocop)

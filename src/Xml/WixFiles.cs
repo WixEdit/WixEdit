@@ -307,6 +307,7 @@ WixFiles.WixNamespaceUri));
             if (wxsDocument == null)
             {
                 wxsDocument = new XmlDocument();
+                wxsDocument.PreserveWhitespace = true;
             }
 
             wxsDocument.LoadXml(xml);
@@ -1116,9 +1117,12 @@ WixFiles.WixNamespaceUri));
 
             using (FileStream fs = new FileStream(wxsFile.FullName, mode))
             {
-                XmlTextWriter writer = new XmlTextWriter(fs, new System.Text.UTF8Encoding());
-                writer.Formatting = Formatting.Indented;
-                writer.Indentation = WixEditSettings.Instance.XmlIndentation;
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = new string(' ', WixEditSettings.Instance.XmlIndentation);
+                settings.NewLineHandling = NewLineHandling.None;
+                settings.Encoding = new System.Text.UTF8Encoding();
+                XmlWriter writer = XmlWriter.Create(fs, settings);
 
                 wxsDocument.Save(writer);
 
