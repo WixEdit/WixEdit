@@ -20,12 +20,13 @@
 
 
 using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Xml;
 using System.IO;
+
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 using WixEdit.Controls;
 using WixEdit.Import;
@@ -773,12 +774,37 @@ namespace WixEdit.Wizard
             TreeNode aNode = tree.SelectedNode;
             XmlNode aNodeElement = aNode.Tag as XmlNode;
 
-            FolderSelectDialog ofd = new FolderSelectDialog();
-            ofd.Description = "Select folder to import";
-            ofd.ShowNewFolderButton = false;
-            if (ofd.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(ofd.SelectedPath))
+            string title = "Select folder to import";
+            string defaultDirectory = Directory.GetCurrentDirectory();
+
+            if (CommonFileDialog.IsPlatformSupported)
             {
-                ImportFoldersInDirectory(aNode, aNodeElement, new string[] { ofd.SelectedPath });
+                using (var dialog = new CommonOpenFileDialog()
+                {
+                    Title = title,
+                    IsFolderPicker = true,
+                    DefaultDirectory = defaultDirectory
+                })
+                {
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok && !String.IsNullOrEmpty(dialog.FileName))
+                    {
+                        ImportFoldersInDirectory(aNode, aNodeElement, new string[] { dialog.FileName });
+                    }
+                }
+            }
+            else
+            {
+                using (var dialog = new FolderSelectDialog()
+                {
+                    Description = title,
+                    ShowNewFolderButton = false
+                })
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(dialog.SelectedPath))
+                    {
+                        ImportFoldersInDirectory(aNode, aNodeElement, new string[] { dialog.SelectedPath });
+                    }
+                }
             }
         }
 

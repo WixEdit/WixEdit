@@ -7,14 +7,17 @@
     lightArgs: "<projectname>.wixobj" -out "<projectname>.msi" <extensions>
 -->
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <?ifndef Configuration ?>
+    <?define Configuration="Debug" ?>
+  <?endif?>
   <Product Name="WixEdit" Id="*" Version="$(var.VERSION)" UpgradeCode="5D5D3F6C-20FE-487e-9836-542950FD7921" Manufacturer="Jasper Keuper (jkeuper@gmail.com)" Language="1033">
     <Package Compressed="yes" Id="*" InstallerVersion="200" />
     <Condition Message="You must install the Microsoft .NET Framework SDK 1.1.4322 before running [ProductName] [Setup].">MsiNetAssemblySupport&gt;="1.1.4322"</Condition>
     <?include Dialogs.wxi?>
     <Property Id="VSDSupportedRuntimes">1.1.4322</Property>
-    <Property Id="ARPHELPLINK">http://wixedit.sourceforge.net</Property>
+    <Property Id="ARPHELPLINK">https://github.com/WixEdit/WixEdit</Property>
     <Property Id="ARPCONTACT">Jasper Keuper (jkeuper@gmail.com)</Property>
-    <Property Id="ARPURLINFOABOUT">http://wixedit.sourceforge.net</Property>
+    <Property Id="ARPURLINFOABOUT">https://github.com/WixEdit/WixEdit</Property>
     <Property Id="ARPPRODUCTICON">WixEdit.Application.Icon</Property>
     <Property Id="ALLUSERS" Value="1" />
     <Property Id="WixEditExe" Value="WixEdit.exe" />
@@ -31,18 +34,17 @@
       </Directory>
       <Directory Id="ProgramFilesFolder" Name="PFiles">
         <Directory Id="INSTALLDIR" Name="WixEdit">
-          <Component Id="SourcesZip" DiskId="1" KeyPath="yes" Guid="53134C5D-46B8-46B3-8364-730D68B08C96">
-            <File Id="Sources.zip" Name="Sources.zip" Source="..\install\Sources.zip" />
-          </Component>
           <Directory Id="Binaries" Name="binaries">
             <Component Id="Binaries" DiskId="1" Guid="89962590-24E4-4E05-BA3F-2C98866D54BC">
-              <File Id="WixEditExe" Name="WixEdit.exe" KeyPath="yes" Source="..\build\WixEdit.exe">
+              <File Id="WixEditExe" Name="WixEdit.exe" KeyPath="yes" Source="..\bin\$(var.Configuration)\WixEdit.exe">
                 <Shortcut Id="ExeShortcut" Directory="ProgramMenuDir" Name="WixEdit" WorkingDirectory="Binaries" Advertise="yes" Icon="WixEditIcon.exe" IconIndex="0" />
                 <netfx:NativeImage Id="WixEdit.NGen32" Platform="32bit" Priority="3" AppBaseDirectory="Binaries" />
-				<netfx:NativeImage Id="WixEdit.NGen64" Platform="64bit" Priority="3" AppBaseDirectory="Binaries" />
+                <netfx:NativeImage Id="WixEdit.NGen64" Platform="64bit" Priority="3" AppBaseDirectory="Binaries" />
               </File>
               <!-- Include pdb so error reporting shows line numbers. -->
-              <File Id="pdb" Name="WixEdit.pdb" Source="..\build\WixEdit.pdb" />
+              <File Id="pdb" Name="WixEdit.pdb" Source="..\bin\$(var.Configuration)\WixEdit.pdb" />
+              <File Id="MICROSOFT.WINDOWSAPICODEPACK.DLL" Name="Microsoft.WindowsAPICodePack.dll" Source="..\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.dll" />
+              <File Id="MICROSOFT.WINDOWSAPICODEPACK.SHELL.DLL" Name="Microsoft.WindowsAPICodePack.Shell.dll" Source="..\bin\$(var.Configuration)\Microsoft.WindowsAPICodePack.Shell.dll" />
             </Component>
           </Directory>
           <Directory Id="Samples" Name="sample">
@@ -224,12 +226,6 @@
       <Feature Id="BinariesFeature" Level="1" Title="Binaries" Absent="disallow" Description="The WixEdit binaries." AllowAdvertise="no">
         <ComponentRef Id="Binaries" />
         <ComponentRef Id="StartMenuShortcuts" />
-        <!--
-        <ComponentRef Id="UninstallShortcut" />
--->
-      </Feature>
-      <Feature Id="SourcesFeature" Level="110" Title="Sources" Description="The WixEdit sources in C#, which can be build with NAnt or Visual Studio 2003." AllowAdvertise="no">
-        <ComponentRef Id="SourcesZip" />
       </Feature>
       <Feature Id="SamplesFeature" Title="Samples" Level="1" Display="collapse" Description="WixEdit samples" AllowAdvertise="no">
         <ComponentRef Id="Sample.UISample" />
@@ -263,7 +259,7 @@
     <CustomAction Id="NewVersionError" Error="A newer version of [ProductName] is already installed! Cannot continue installation." />
     <Media Id="1" EmbedCab="yes" Cabinet="Files.cab" />
     <Icon Id="WixEdit.Application.Icon" SourceFile="..\res\dialog\source.ico" />
-    <Icon Id="WixEditIcon.exe" SourceFile="..\build\WixEdit.exe" />
+    <Icon Id="WixEditIcon.exe" SourceFile="..\bin\$(var.Configuration)\WixEdit.exe" />
     <PropertyRef Id="NETFRAMEWORK20" />
     <Condition Message="This application requires .NET Framework 2.0.">Installed OR NETFRAMEWORK20</Condition>
   </Product>
