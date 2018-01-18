@@ -20,13 +20,13 @@
 
 
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Xml;
 using System.Windows.Forms;
+
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 using WixEdit.Import;
 using WixEdit.Server;
@@ -223,6 +223,7 @@ namespace WixEdit.Panels
             XmlNode aNodeElement = aNode.Tag as XmlNode;
 
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.InitialDirectory = Path.GetDirectoryName(this.WixFiles.WxsFile.FullName);
             ofd.Filter = "All files (*.*)|*.*|Registration Files (*.reg)|*.REG";
             ofd.RestoreDirectory = true;
             ofd.Multiselect = true;
@@ -241,12 +242,37 @@ namespace WixEdit.Panels
             TreeNode aNode = CurrentTreeView.SelectedNode;
             XmlNode aNodeElement = aNode.Tag as XmlNode;
 
-            FolderSelectDialog ofd = new FolderSelectDialog();
-            ofd.Description = "Select folder to import";
-            ofd.ShowNewFolderButton = false;
-            if (ofd.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(ofd.SelectedPath))
+            string title = "Select folder to import";
+            string defaultDirectory = Path.GetDirectoryName(this.WixFiles.WxsFile.FullName);
+
+            if (CommonFileDialog.IsPlatformSupported)
             {
-                ImportFoldersInDirectory(aNode, aNodeElement, new string[] { ofd.SelectedPath });
+                using (var dialog = new CommonOpenFileDialog()
+                {
+                    Title = title,
+                    IsFolderPicker = true,
+                    DefaultDirectory = defaultDirectory
+                })
+                {
+                    if (dialog.ShowDialog() == CommonFileDialogResult.Ok && !String.IsNullOrEmpty(dialog.FileName))
+                    {
+                        ImportFoldersInDirectory(aNode, aNodeElement, new string[] { dialog.FileName });
+                    }
+                }
+            }
+            else
+            {
+                using (var dialog = new FolderSelectDialog()
+                {
+                    Description = title,
+                    ShowNewFolderButton = false
+                })
+                {
+                    if (dialog.ShowDialog() == DialogResult.OK && !String.IsNullOrEmpty(dialog.SelectedPath))
+                    {
+                        ImportFoldersInDirectory(aNode, aNodeElement, new string[] { dialog.SelectedPath });
+                    }
+                }
             }
         }
 

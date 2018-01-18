@@ -1,9 +1,9 @@
 [DEFAULT]
-BASEURL=http://wixedit.sourceforge.net/
+BASEURL=https://github.com/WixEdit/WixEdit/
 [InternetShortcut]
-URL=http://wixedit.sourceforge.net/
+URL=https://github.com/WixEdit/WixEdit/
 IDList=
-IconFile=http://wixedit.sourceforge.net/favico.ico
+IconFile=https://raw.githubusercontent.com/WixEdit/WixEdit/master/src/App.ico
 IconIndex=1
 [{000214A0-0000-0000-C000-000000000046}]
 Prop3=19,2

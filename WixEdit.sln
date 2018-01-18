@@ -8,11 +8,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6ECAF58F-5D73-49FC-93EE-D1F6687BB97A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		build.cmd = build.cmd
+		appveyor.yml = appveyor.yml
 		HISTORY.md = HISTORY.md
 		README.md = README.md
-		WixEdit.build = WixEdit.build
-		WixEdit.version.xml = WixEdit.version.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "installer", "installer", "{7F35C77A-8939-4889-8A19-94FCB1127222}"

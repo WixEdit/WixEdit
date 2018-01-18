@@ -137,7 +137,7 @@ namespace WixEdit
                 if (String.IsNullOrEmpty(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) ||
                     Directory.Exists(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) == false)
                 {
-                    MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wix.sourceforge.net/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
+                    MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wixtoolset.org/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
                 }
                 else
                 {
@@ -157,7 +157,7 @@ namespace WixEdit
                 if (String.IsNullOrEmpty(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) ||
                     Directory.Exists(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) == false)
                 {
-                    MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wix.sourceforge.net/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
+                    MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wixtoolset.org/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
                 }
                 else
                 {
@@ -1514,7 +1514,7 @@ namespace WixEdit
                     if (String.IsNullOrEmpty(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) ||
                     Directory.Exists(WixEditSettings.Instance.WixBinariesDirectory.BinDirectory) == false)
                     {
-                        MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wix.sourceforge.net/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
+                        MessageBox.Show("Windows Installer XML (WiX) Toolset installation is required to run WixEdit.\r\n\r\nThe WiX installation can be downloaded from http://wixtoolset.org/. Please download and install WiX and specify the install location in the WixEdit options.", "Missing WiX");
                     }
                     else
                     {

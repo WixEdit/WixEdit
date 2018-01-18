@@ -42,7 +42,7 @@ namespace WixEdit.About {
 
         string versionFormatString = "WiX Edit v{0}";
         string copyright = "Copyright © 2011 J.Keuper. All rights reserved";
-        string url = "http://wixedit.sourceforge.net/";
+        string url = "https://github.com/WixEdit/WixEdit";
 
 
         // There are 2 kinds of transparency:
