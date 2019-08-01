@@ -8,7 +8,7 @@ This project was originally created by Jasper Keuper (jkeuper@gmail.com) at http
 Build Status
 ------------
 
-[![Build status](https://ci.appveyor.com/api/projects/status/w1nvnptfdmia3jkn?svg=true)](https://ci.appveyor.com/project/icnocop/wixedit-pcl8l)
+[![Build status](https://ci.appveyor.com/api/projects/status/pn5s1627y9nsu858?svg=true)](https://ci.appveyor.com/project/icnocop/wixedit)
 
 License
 -------
