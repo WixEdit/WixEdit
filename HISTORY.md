@@ -1,5 +1,6 @@
 # 0.7.6 (Release Date TBD)
 
+* Added a search field to filter the list of components when adding components to a feature for example [@icnocop](https://github.com/icnocop)
 * Replaced FolderSelectDialog with WindowsAPICodePack's CommonOpenFileDialog [@icnocop](https://github.com/icnocop)
 * Displaying standard errors to output panel if launched processes write to it [@icnocop](https://github.com/icnocop)
 * Preserving white space in attribute values when saving the file [Feature Request #69](https://sourceforge.net/p/wixedit/feature-requests/69/) [@icnocop](https://github.com/icnocop)

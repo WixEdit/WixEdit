@@ -32,6 +32,7 @@
             this.StringList = new System.Windows.Forms.ListBox();
             this.ButtonOk = new System.Windows.Forms.Button();
             this.ButtonCancel = new System.Windows.Forms.Button();
+            this.SearchTextBox = new WixEdit.src.Controls.SearchTextBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -40,13 +41,15 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel1.Controls.Add(this.StringList, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.ButtonOk, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.ButtonCancel, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.StringList, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.ButtonOk, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.ButtonCancel, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.SearchTextBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.Size = new System.Drawing.Size(294, 243);
@@ -59,11 +62,11 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.StringList, 2);
             this.StringList.FormattingEnabled = true;
-            this.StringList.Location = new System.Drawing.Point(3, 3);
+            this.StringList.Location = new System.Drawing.Point(3, 29);
             this.StringList.Name = "StringList";
             this.StringList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.StringList.Size = new System.Drawing.Size(288, 199);
-            this.StringList.TabIndex = 1;
+            this.StringList.Size = new System.Drawing.Size(288, 173);
+            this.StringList.TabIndex = 2;
             this.StringList.SelectedValueChanged += new System.EventHandler(this.OnSelectionChanged);
             this.StringList.DoubleClick += new System.EventHandler(this.OnDoubleClickList);
             // 
@@ -89,6 +92,20 @@
             this.ButtonCancel.Text = "Cancel";
             this.ButtonCancel.UseVisualStyleBackColor = true;
             // 
+            // SearchTextBox
+            // 
+            this.SearchTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchTextBox.CancelSearchImage = global::WixEdit.Properties.Resources.x;
+            this.tableLayoutPanel1.SetColumnSpan(this.SearchTextBox, 2);
+            this.SearchTextBox.Location = new System.Drawing.Point(3, 3);
+            this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.SearchImage = global::WixEdit.Properties.Resources.magnify;
+            this.SearchTextBox.Size = new System.Drawing.Size(288, 20);
+            this.SearchTextBox.TabIndex = 1;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.OnSearchTextChanged);
+            // 
             // SelectStringForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -104,6 +121,7 @@
             this.Text = "New Attribute Name";
             this.Load += new System.EventHandler(this.OnLoad);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -114,5 +132,6 @@
         private System.Windows.Forms.ListBox StringList;
         private System.Windows.Forms.Button ButtonOk;
         private System.Windows.Forms.Button ButtonCancel;
+        private src.Controls.SearchTextBox SearchTextBox;
     }
 }

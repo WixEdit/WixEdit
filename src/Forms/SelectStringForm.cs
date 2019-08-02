@@ -16,6 +16,8 @@
 
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace WixEdit.Forms
@@ -97,6 +99,19 @@ namespace WixEdit.Forms
             }
 
             UpdateOkButton();
+        }
+
+        private void OnSearchTextChanged(object sender, EventArgs e)
+        {
+            IEnumerable<string> displayList = this.PossibleStrings;
+
+            if (this.SearchTextBox.Text != string.Empty)
+            {
+                displayList = this.PossibleStrings.Where(x => x.IndexOf(this.SearchTextBox.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
+
+            this.StringList.Items.Clear();
+            this.StringList.Items.AddRange(displayList.ToArray());
         }
     }
 }
