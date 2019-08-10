@@ -434,6 +434,7 @@ namespace WixEdit.Panels
                     TextBox newEdit = new TextBox();
                     SetControlAttributes(newEdit, edit);
                     SetText(newEdit, edit);
+                    SetMultiline(newEdit, edit);
 
                     newEdit.BorderStyle = BorderStyle.Fixed3D;
 
@@ -472,6 +473,7 @@ namespace WixEdit.Panels
                     TextBox newPathEdit = new TextBox();
                     SetControlAttributes(newPathEdit, pathEdit);
                     SetText(newPathEdit, pathEdit);
+                    SetMultiline(newPathEdit, pathEdit);
 
                     newDialog.AddControl(pathEdit, newPathEdit);
                 }
@@ -917,7 +919,7 @@ namespace WixEdit.Panels
                 control.Enabled = false;
             }
 
-            //control.ClientSize = new Size(DialogUnitsToPixels(XmlConvert.ToInt32(controlElement.Attributes["Width"].Value)), DialogUnitsToPixels(XmlConvert.ToInt32(button.Attributes["Height"].Value)));
+            //control.ClientSize = new Size(DialogUnitsToPixelsWidth(XmlConvert.ToInt32(controlElement.Attributes["Width"].Value)), DialogUnitsToPixelsHeight(XmlConvert.ToInt32(controlElement.Attributes["Height"].Value)));
         }
 
         private void SetText(Control textControl, XmlNode textElement)
@@ -943,6 +945,15 @@ namespace WixEdit.Panels
             }
 
             textControl.Text = textValue;
+        }
+
+        private void SetMultiline(TextBox control, XmlNode controlElement)
+        {
+            XmlAttribute multiline = controlElement.Attributes["Multiline"];
+            if (multiline != null && multiline.Value == "yes")
+            {
+                control.Multiline = true;
+            }
         }
 
         private void SetTag(Control textControl, XmlNode textElement)

@@ -1599,7 +1599,7 @@ namespace WixEdit.Panels
                 controlTypeAttributeMap.Add("CheckBoxPropertyRef", new List<string>(new string[] { "CheckBox" }));
                 controlTypeAttributeMap.Add("CheckBoxValue", new List<string>(new string[] { "CheckBox" }));
                 controlTypeAttributeMap.Add("ComboList", new List<string>(new string[] { "ComboBox" }));
-                controlTypeAttributeMap.Add("Multiline", new List<string>(new string[] { "Edit" }));
+                controlTypeAttributeMap.Add("Multiline", new List<string>(new string[] { "Edit", "PathEdit" }));
                 controlTypeAttributeMap.Add("Password", new List<string>(new string[] { "Edit" }));
                 controlTypeAttributeMap.Add("Sorted", new List<string>(new string[] { "ListBox", "ListView", "ComboBox" }));
                 controlTypeAttributeMap.Add("ProgressBlocks", new List<string>(new string[] { "ProgressBar" }));
