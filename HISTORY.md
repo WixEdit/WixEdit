@@ -1,5 +1,6 @@
 # 0.7.6 (Release Date TBD)
 
+* Setting Multiline property for Edit and PathEdit controls [#4](https://github.com/WixEdit/WixEdit/issues/4) [@icnocop](https://github.com/icnocop)
 * Added a search field to filter the list of components when adding components to a feature for example [@icnocop](https://github.com/icnocop)
 * Replaced FolderSelectDialog with WindowsAPICodePack's CommonOpenFileDialog [@icnocop](https://github.com/icnocop)
 * Displaying standard errors to output panel if launched processes write to it [@icnocop](https://github.com/icnocop)
