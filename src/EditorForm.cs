@@ -25,10 +25,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Data;
 using System.Xml;
 using System.IO;
-using System.Resources;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -42,6 +40,11 @@ using WixEdit.Panels;
 using WixEdit.Images;
 using WixEdit.Helpers;
 using WixEdit.Forms;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace WixEdit
 {
@@ -496,6 +499,14 @@ namespace WixEdit
             }
         }
 
+        private static void TestCrashIfSpecified()
+        {
+            string[] args = Environment.GetCommandLineArgs();
+            if (args.Contains("/crash"))
+            {
+                Crashes.GenerateTestCrash();
+            }
+        }
         private void EditorForm_Activated(object sender, System.EventArgs e)
         {
             if (splashIsDone)
@@ -1939,6 +1950,23 @@ namespace WixEdit
         [STAThread]
         static void Main()
         {
+            AppDomain.CurrentDomain.UnhandledException += OnCurrentDomainUnhandledException;
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
+
+            Crashes.SentErrorReport += (object sender, SentErrorReportEventArgs e) => {
+                MessageBox.Show($"Error report sent successfully.", "Error report sent successfully");
+            };
+
+            Crashes.FailedToSendErrorReport += (object sender, FailedToSendErrorReportEventArgs e) => {
+                MessageBox.Show($"Error occured while reporting an error.\r\n{e.Exception.ToString()}", "Failed to send error report");
+            };
+
+            AppCenter.Start("97ffeb19-5eb3-422e-a73a-4a76d3f33379", typeof(Analytics), typeof(Crashes));
+
+            // enable crash reporting
+            Task setCrashesEnabledTask = Crashes.SetEnabledAsync(true);
+            setCrashesEnabledTask.Wait();
+
             string fileToOpen = null;
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length == 2)
@@ -1986,7 +2014,6 @@ namespace WixEdit
             Application.EnableVisualStyles();
             Application.DoEvents();
 
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
             try
             {
                 EditorForm editorForm = null;
@@ -1999,6 +2026,8 @@ namespace WixEdit
                     editorForm = new EditorForm(fileToOpen);
                 }
 
+                editorForm.Load += OnEditorFormLoad;
+
                 Application.Run(editorForm);
             }
             catch (Exception ex)
@@ -2010,6 +2039,22 @@ namespace WixEdit
                     ErrorReporter reporter = new ErrorReporter();
                     reporter.Report(ex);
                 }
+            }
+        }
+
+        private static void OnEditorFormLoad(object sender, EventArgs e)
+        {
+            TestCrashIfSpecified();
+        }
+
+        private static void OnCurrentDomainUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            string message = "An unhandled exception occured! Please press OK to report this error to the WixEdit website, so this error can be fixed.";
+            ExceptionForm form = new ExceptionForm(message, e.ExceptionObject as Exception);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                ErrorReporter reporter = new ErrorReporter();
+                reporter.Report(e.ExceptionObject as Exception);
             }
         }
 
