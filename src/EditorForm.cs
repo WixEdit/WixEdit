@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
@@ -1537,70 +1536,18 @@ namespace WixEdit
 
         private void helpTutorial_Click(object sender, System.EventArgs e)
         {
-            string target = "http://www.tramontana.co.hu/wix/";
-
-            // Navigate to it.
-            try
-            {
-                Process.Start(target);
-            }
-            catch (Win32Exception)
-            {
-                // Workaround for:
-                // "Win32Exception: The requested lookup key was not found in any active activation context"   
-                Process process = new Process();
-                process.StartInfo.FileName = "cmd.exe"; // Win2K+
-                process.StartInfo.Arguments = "/c start " + target;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.UseShellExecute = false;
-                process.Start();
-            }
+            FileHelper.OpenTarget("https://www.firegiant.com/wix/tutorial/");
         }
 
         private void helpWiXReference_Click(object sender, System.EventArgs e)
         {
             string xsdDir = WixEditSettings.Instance.WixBinariesDirectory.Xsds;
-            string target = Path.Combine(xsdDir, "WiX.chm");
-
-            // Navigate to it.
-            try
-            {
-                Process.Start(target);
-            }
-            catch (Win32Exception)
-            {
-                // Workaround for:
-                // "Win32Exception: The requested lookup key was not found in any active activation context"   
-                Process process = new Process();
-                process.StartInfo.FileName = "cmd.exe"; // Win2K+
-                process.StartInfo.Arguments = "/c start " + target;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.UseShellExecute = false;
-                process.Start();
-            }
+            FileHelper.OpenTarget(Path.Combine(xsdDir, "WiX.chm"));
         }
 
         private void helpMSIReference_Click(object sender, System.EventArgs e)
         {
-            string target = "http://msdn2.microsoft.com/en-us/library/aa372860.aspx";
-            //old: "http://msdn.microsoft.com/library/en-us/msi/setup/windows_installer_reference.asp";
-
-            // Navigate to it.
-            try
-            {
-                Process.Start(target);
-            }
-            catch (Win32Exception)
-            {
-                // Workaround for:
-                // "Win32Exception: The requested lookup key was not found in any active activation context"   
-                Process process = new Process();
-                process.StartInfo.FileName = "cmd.exe"; // Win2K+
-                process.StartInfo.Arguments = "/c start " + target;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.UseShellExecute = false;
-                process.Start();
-            }
+            FileHelper.OpenTarget("https://docs.microsoft.com/en-us/windows/win32/msi/windows-installer-reference");
         }
 
         private void helpAbout_Click(object sender, System.EventArgs e)

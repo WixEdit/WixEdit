@@ -425,6 +425,7 @@
       <DependentUpon>SelectStringForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Helpers\CopyDataMessenger.cs" />
+    <Compile Include="src\Helpers\FileHelper.cs" />
     <Compile Include="src\Helpers\NewInstanceStarter.cs" />
     <Compile Include="src\Helpers\PathHelper.cs" />
     <Compile Include="src\Helpers\VoidVoidDelegate.cs" />
