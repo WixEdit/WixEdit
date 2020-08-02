@@ -21,42 +21,27 @@
 
 using System;
 using System.IO;
-using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Threading;
-using System.Xml;
 using System.Windows.Forms;
 
-using WixEdit.Settings;
+using System.Collections.Generic;
+using Microsoft.AppCenter.Crashes;
 
 namespace WixEdit {
     public class ErrorReporter {
-        protected readonly string formFieldName = "message";
+        protected Dictionary<string, string> properties;
+        protected Exception exception;
 
-        // Reports of today can be viewed at: http://wixedit.sourceforge.net/server/viewreport.php
-        protected readonly string reportingUrl = "http://wixedit.sourceforge.net/server/report.php";
-
-        protected string stringBuffer;
-        protected string boundary;
+        public ErrorReporter()
+        {
+            this.properties = new Dictionary<string, string>();
+        }
 
         public void Report(Exception exception) {
-            // Start building http POST.
-            StringBuilder buffer = new StringBuilder();
 
-            boundary = "----------" + Guid.NewGuid().ToString("N").ToUpper();
-            
-            buffer.Append("--").Append(boundary).Append("\r\n");
-            buffer.Append("Content-Disposition: form-data; name=\"");
-            buffer.Append(formFieldName).Append("\"\r\n\r\n");
-            buffer.Append("Version ").Append(WixEditSettings.Instance.ApplicationVersion).Append("\r\n");
-            buffer.Append("LastModified ").Append(File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString("yyyy-MM-ddTHH:mm:ssZ")).Append("\r\n");
-            buffer.Append("DateTime ").Append(DateTime.Now.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")).Append("\r\n\r\n");
-            buffer.Append(exception.ToString()).Append("\r\n");
-            
-            buffer.Append("\r\n--").Append(boundary).Append("--\r\n");
-
-            stringBuffer = buffer.ToString();
+            this.properties.Add("LastModified", File.GetLastWriteTimeUtc(Assembly.GetExecutingAssembly().Location).ToString("yyyy-MM-ddTHH:mm:ssZ"));
+            this.exception = exception;
 
             Thread reportThread = new Thread(new ThreadStart(DoReport));
             reportThread.Start();
@@ -64,25 +49,7 @@ namespace WixEdit {
 
         protected void DoReport() {
             try {
-                // Create a request.
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(reportingUrl);
-
-                request.Credentials =  CredentialCache.DefaultCredentials;
-
-                request.ContentType = "multipart/form-data; boundary=" + boundary;
-                request.Method = "POST";
-                request.ContentLength = stringBuffer.Length;
-
-                request.ContentLength = Encoding.ASCII.GetByteCount(stringBuffer);
-
-                Stream requestStream = request.GetRequestStream();
-
-                requestStream.Write(Encoding.ASCII.GetBytes(stringBuffer), 0, Encoding.ASCII.GetByteCount(stringBuffer));
-                requestStream.Close();
-
-                // Get response back.
-                using (HttpWebResponse httpResponse = (HttpWebResponse)request.GetResponse()) {
-                }
+                Crashes.TrackError(exception, properties);
             } catch (Exception) {
                 MessageBox.Show("Error occured while reporting an error.");
                 // This happens in a separate thread, don't bother the user with this...
