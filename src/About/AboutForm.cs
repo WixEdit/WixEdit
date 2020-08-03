@@ -20,12 +20,11 @@
 
 
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 
+using WixEdit.Helpers;
 using WixEdit.Xml;
 
 namespace WixEdit.About {
@@ -76,35 +75,41 @@ namespace WixEdit.About {
 
             int labelHeight = 16;
 
-            versionLabel = new Label();
-            versionLabel.Text = String.Format(versionFormatString, Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            versionLabel.Left = 70;
-            versionLabel.Top = 86;
-            versionLabel.Width = 300;
-            versionLabel.Height = labelHeight;
-            versionLabel.BackColor = Color.Transparent;
+            versionLabel = new Label
+            {
+                Text = String.Format(versionFormatString, Assembly.GetExecutingAssembly().GetName().Version.ToString()),
+                Left = 70,
+                Top = 86,
+                Width = 300,
+                Height = labelHeight,
+                BackColor = Color.Transparent
+            };
             versionLabel.Click += new EventHandler(OnClose);
 
             Controls.Add(versionLabel);
 
-            copyrightLabel = new Label();
-            copyrightLabel.Text = copyright;
-            copyrightLabel.Left = 70;
-            copyrightLabel.Top = versionLabel.Top+versionLabel.Height;
-            copyrightLabel.Width = 300;
-            copyrightLabel.Height = labelHeight;
-            copyrightLabel.BackColor = Color.Transparent;
+            copyrightLabel = new Label
+            {
+                Text = copyright,
+                Left = 70,
+                Top = versionLabel.Top + versionLabel.Height,
+                Width = 300,
+                Height = labelHeight,
+                BackColor = Color.Transparent
+            };
             copyrightLabel.Click += new EventHandler(OnClose);
 
             Controls.Add(copyrightLabel);
 
-            urlLabel = new LinkLabel();
-            urlLabel.Text = url;
-            urlLabel.Left = 70;
-            urlLabel.Top = copyrightLabel.Top+copyrightLabel.Height;
-            urlLabel.Width = 160;
-            urlLabel.Height = labelHeight;
-            urlLabel.BackColor = Color.Transparent;
+            urlLabel = new LinkLabel
+            {
+                Text = url,
+                Left = 70,
+                Top = copyrightLabel.Top + copyrightLabel.Height,
+                Width = 300,
+                Height = labelHeight,
+                BackColor = Color.Transparent
+            };
 
             urlLabel.Links.Add(0, url.Length, url);
             urlLabel.LinkClicked += new LinkLabelLinkClickedEventHandler(OnUrlClicked);
@@ -129,19 +134,7 @@ namespace WixEdit.About {
             // LinkData property of the Link object.
             string target = e.Link.LinkData as string;
 
-            // Navigate to it.
-            try {
-                Process.Start(target);
-            } catch (Win32Exception) {
-                // Workaround for:
-                // "Win32Exception: The requested lookup key was not found in any active activation context"   
-                Process process = new Process();
-                process.StartInfo.FileName = "cmd.exe"; // Win2K+
-                process.StartInfo.Arguments = "/c start " + target;
-                process.StartInfo.CreateNoWindow = true;
-                process.StartInfo.UseShellExecute = false;
-                process.Start();
-            }
+            FileHelper.OpenTarget(target);
         }
 
         public void OnClose(object sender, EventArgs e) {
