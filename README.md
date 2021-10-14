@@ -18,4 +18,5 @@ Contributors
 ------------
 * Jasper Keuper
 * Sebastian Baumhekel
+* Chris Richner
 * Rami Abughazaleh
