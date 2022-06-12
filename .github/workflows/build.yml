@@ -1,0 +1,117 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+    branches: [ "master" ]
+    inputs:
+      release:
+        description: 'Create release in GitHub?'
+        required: true
+        default: 'false'
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+
+    runs-on: windows-latest
+        
+    steps:
+    
+    - name: Set version number
+      run: |
+        $majorVersion = 0
+        $minorVersion = 8
+        $firstBuildYear = 2022
+        $currentDate = Get-Date
+        $currentDate = $currentDate.ToUniversalTime()
+        $currentYear = $currentDate.ToString("yyyy")
+        $buildYear = [Convert]::ToInt32($currentYear)
+        $currentMonthDay = $currentDate.ToString("MMdd")
+        $buildVersion = (($buildYear - $firstBuildYear) * 1200) + ([Convert]::ToInt32($currentMonthDay))
+        echo "Current Date=$currentDate"
+        echo "VERSION=$majorVersion.$minorVersion.$buildVersion.${{ github.RUN_NUMBER }}" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf-8 -Append
+        
+    - name: Read environmental variables
+      run: |
+        echo VERSION=${{ env.VERSION }}
+        echo GITHUB_WORKSPACE=${{ github.WORKSPACE }}
+        
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Update AssemblyInfo.cs files
+      run: |
+        $files = Get-ChildItem "${{ github.WORKSPACE }}" -recurse -include "*src*" | 
+            ?{ $_.PSIsContainer } | 
+            foreach { Get-ChildItem -Path $_.FullName -Recurse -include AssemblyVersionInfo.* }
+        if (-not $files)
+        {
+            Write-Host "Didn't find any files to update."
+            exit 1
+        }
+        else
+        {
+            foreach ($file in $files) {
+                $filecontent = Get-Content($file)
+                attrib $file -r
+                $filecontent -replace "\d+\.\d+\.\d+\.\d+", "${{ env.VERSION }}" | Out-File $file
+                Write-Host "Version applied to '$file'"
+            }
+        }
+
+    # https://github.com/microsoft/setup-msbuild
+    - name: Add MSBuild to the PATH
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Build
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      run: msbuild /m /restore /p:Configuration=${{ matrix.Configuration }} .\WixEdit.sln
+      
+    - name: Create installer
+      working-directory: ${{env.GITHUB_WORKSPACE}}
+      shell: cmd
+      run: |
+        .\tools\wix-3.5.1322.0\candle.exe -ext WixNetfxExtension ".\installer\WixEdit.wxs" -dConfiguration=${{ matrix.Configuration }} -dVERSION=${{ env.VERSION }}
+        .\tools\wix-3.5.1322.0\light.exe -b .\installer -ext WixNetfxExtension -out WixEdit-${{ env.VERSION }}.msi WixEdit.wixobj
+        7z a WixEdit-${{ env.VERSION }}-bin.zip .\bin\${{ matrix.Configuration }} -xr!*.xml -xr!*.vshost*
+        7z rn WixEdit-${{ env.VERSION }}-bin.zip ${{ matrix.Configuration }} bin
+        7z a WixEdit-${{ env.VERSION }}-bin.zip .\templates .\wizard .\sample
+
+    # https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts (MSI)
+      uses: actions/upload-artifact@v3
+      with:
+        name: WixEdit ${{ env.VERSION }} ${{ matrix.Configuration }}-bin
+        path: WixEdit-${{ env.VERSION }}-bin.zip
+        if-no-files-found: error
+        
+    - name: Upload build artifacts (ZIP)
+      uses: actions/upload-artifact@v3
+      with:
+        name: WixEdit ${{ env.VERSION }} ${{ matrix.Configuration }}.msi
+        path: WixEdit-${{ env.VERSION }}.msi
+        if-no-files-found: error
+
+    - name: Publish GitHub Release
+      if: ${{ matrix.Configuration == 'Release' && github.event.inputs.release == 'true' }}
+      uses: softprops/action-gh-release@v1
+      with:
+        name: v${{ env.VERSION }}
+        tag_name: v${{ env.VERSION }}
+        generate_release_notes: true
+        draft: true
+        prerelease: false
+        fail_on_unmatched_files: true
+        files: |
+            WixEdit-${{ env.VERSION }}.msi
+            WixEdit-${{ env.VERSION }}-bin.zip

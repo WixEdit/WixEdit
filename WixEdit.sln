@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixEdit", "WixEdit.csproj", "{34D47764-B2F0-4BB6-BD84-C47DD3DCA20F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6ECAF58F-5D73-49FC-93EE-D1F6687BB97A}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		appveyor.yml = appveyor.yml
+		.github\workflows\build.yml = .github\workflows\build.yml
 		HISTORY.md = HISTORY.md
 		README.md = README.md
 	EndProjectSection
@@ -59,5 +59,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7F35C77A-8939-4889-8A19-94FCB1127222} = {6ECAF58F-5D73-49FC-93EE-D1F6687BB97A}
 		{C6787DC3-CDA5-41E8-A048-7658A7AA6461} = {7F35C77A-8939-4889-8A19-94FCB1127222}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3DDD200-1AF5-4BFA-A5A0-43F3C3DC72A8}
 	EndGlobalSection
 EndGlobal

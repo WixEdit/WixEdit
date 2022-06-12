@@ -26,3 +26,6 @@ install
 packages
 installer
 .vs
+*.msi
+*.wixpdb
+*.wixobj

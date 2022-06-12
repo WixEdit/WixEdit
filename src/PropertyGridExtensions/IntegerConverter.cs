@@ -29,7 +29,8 @@ using System.Xml.Schema;
 namespace WixEdit.PropertyGridExtensions {
     public class IntegerConverter : TypeConverter {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType) {
-            if (sourceType == typeof(string)) {
+            if ((sourceType == typeof(string))
+                || (sourceType == typeof(Int64))) {
                 return true;
             }
             return base.CanConvertFrom(context, sourceType);
@@ -44,7 +45,12 @@ namespace WixEdit.PropertyGridExtensions {
         }
  
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
-            if (value is string) {
+            if (value is Int64)
+            {
+                return value;
+            }
+            else if (value is string)
+            {
                 string textValue = ((string) value).Trim();
                 Int64 returnValue;
                 try {

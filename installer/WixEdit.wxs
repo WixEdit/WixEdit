@@ -49,22 +49,37 @@
                             <File Id="MICROSOFT.APPCENTER.CRASHES.DLL" Name="Microsoft.AppCenter.Crashes.dll" Source="..\bin\$(var.Configuration)\Microsoft.AppCenter.Crashes.dll" />
                             <File Id="MICROSOFT.APPCENTER.DLL" Name="Microsoft.AppCenter.dll" Source="..\bin\$(var.Configuration)\Microsoft.AppCenter.dll" />
                             <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\bin\$(var.Configuration)\Newtonsoft.Json.dll" />
-                            <File Id="SQLITE_NET.DLL" Name="SQLite-net.dll" Source="..\bin\$(var.Configuration)\SQLite-net.dll" />
-                            <File Id="SQLITEPCLRAW.BATTERIES_GREEN.DLL" Name="SQLitePCLRaw.batteries_green.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.batteries_green.dll" />
                             <File Id="SQLITEPCLRAW.BATTERIES_V2.DLL" Name="SQLitePCLRaw.batteries_v2.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.batteries_v2.dll" />
                             <File Id="SQLITEPCLRAW.CORE.DLL" Name="SQLitePCLRaw.core.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.core.dll" />
-                            <File Id="SQLITEPCLRAW.PROVIDER.E_SQLITE3.DLL" Name="SQLitePCLRaw.provider.e_sqlite3.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.provider.e_sqlite3.dll" />
-                            <File Id="SYSTEM.RUNTIME.INTEROPSERVICES.RUNTIMEINFORMATION.DLL" Name="System.Runtime.InteropServices.RuntimeInformation.dll" Source="..\bin\$(var.Configuration)\System.Runtime.InteropServices.RuntimeInformation.dll" />
+                            <File Id="SQLITEPCLRAW.NATIVELIBRARY.DLL" Name="SQLitePCLRaw.nativelibrary.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.nativelibrary.dll" />
+                            <File Id="SQLITEPCLRAW.PROVIDER.DYNAMIC_CDECL.DLL" Name="SQLitePCLRaw.provider.dynamic_cdecl.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.provider.dynamic_cdecl.dll" />
+                            <File Id="SYSTEM.BUFFERS.DLL" Name="System.Buffers.dll" Source="..\bin\$(var.Configuration)\System.Buffers.dll" />
+                            <File Id="SYSTEM.MEMORY.DLL" Name="System.Memory.dll" Source="..\bin\$(var.Configuration)\System.Memory.dll" />
+                            <File Id="SYSTEM.NUMERICS.VECTORS.DLL" Name="System.Numerics.Vectors.dll" Source="..\bin\$(var.Configuration)\System.Numerics.Vectors.dll" />
+                            <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="..\bin\$(var.Configuration)\System.Runtime.CompilerServices.Unsafe.dll" />
                         </Component>
-                        <Directory Id="X64" Name="x64">
-                            <Component Id="E_SQLITE3.DLL" DiskId="1" Guid="7A160106-CB66-482A-A472-EA72F950F8BD">
-                                <File Id="E_SQLITE3.DLL" Name="e_sqlite3.dll" Source="..\bin\$(var.Configuration)\x64\e_sqlite3.dll" />
-                            </Component>
-                        </Directory>
-                        <Directory Id="X86" Name="x86">
-                            <Component Id="E_SQLITE3.DLL_1" DiskId="1" Guid="6B94720F-AA3D-4073-924A-758274E471FD">
-                                <File Id="E_SQLITE3.DLL_1" Name="e_sqlite3.dll" Source="..\bin\$(var.Configuration)\x86\e_sqlite3.dll" />
-                            </Component>
+                        <Directory Id="RUNTIMES" Name="runtimes">
+                            <Directory Id="WIN_ARM" Name="win-arm">
+                                <Directory Id="NATIVE" Name="native">
+                                    <Component Id="E_SQLITE3.DLL" DiskId="1" Guid="0C6EA857-FD6B-49E7-BE1E-7D2FAB2A8A2A">
+                                        <File Id="E_SQLITE3.DLL" Name="e_sqlite3.dll" Source="..\bin\$(var.Configuration)\runtimes\win-arm\native\e_sqlite3.dll" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                            <Directory Id="WIN_X64" Name="win-x64">
+                                <Directory Id="NATIVE_1" Name="native">
+                                    <Component Id="E_SQLITE3.DLL_1" DiskId="1" Guid="83177499-9DBD-4CBD-965A-0A6BACDE03B0">
+                                        <File Id="E_SQLITE3.DLL_1" Name="e_sqlite3.dll" Source="..\bin\$(var.Configuration)\runtimes\win-x64\native\e_sqlite3.dll" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+                            <Directory Id="WIN_X86" Name="win-x86">
+                                <Directory Id="NATIVE_2" Name="native">
+                                    <Component Id="E_SQLITE3.DLL_2" DiskId="1" Guid="04DF33E5-A4DA-4B9C-BA1A-5709DA2B74C3">
+                                        <File Id="E_SQLITE3.DLL_2" Name="e_sqlite3.dll" Source="..\bin\$(var.Configuration)\runtimes\win-x86\native\e_sqlite3.dll" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
                         </Directory>
                     </Directory>
                     <Directory Id="Samples" Name="sample">
@@ -248,6 +263,7 @@
                 <ComponentRef Id="StartMenuShortcuts" />
                 <ComponentRef Id="E_SQLITE3.DLL" />
                 <ComponentRef Id="E_SQLITE3.DLL_1" />
+                <ComponentRef Id="E_SQLITE3.DLL_2" />
             </Feature>
             <Feature Id="SamplesFeature" Title="Samples" Level="1" Display="collapse" Description="WixEdit samples" AllowAdvertise="no">
                 <ComponentRef Id="Sample.UISample" />
