@@ -32,8 +32,7 @@ namespace WixEdit.Helpers
         {
             string messageText = string.Empty;
 
-            COPYDATASTRUCT cds = new COPYDATASTRUCT();
-            cds = (COPYDATASTRUCT)Marshal.PtrToStructure(message.LParam, typeof(COPYDATASTRUCT));
+            COPYDATASTRUCT cds = (COPYDATASTRUCT)Marshal.PtrToStructure(message.LParam, typeof(COPYDATASTRUCT));
             if (cds.cbData > 0)
             {
                 byte[] data = new byte[cds.cbData];

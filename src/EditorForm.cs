@@ -44,6 +44,7 @@ using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using System.Threading.Tasks;
 using System.Linq;
+using PInvoke;
 
 namespace WixEdit
 {
@@ -1882,15 +1883,6 @@ namespace WixEdit
             searchPanel.Clear();
         }
 
-        [DllImport("User32")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [DllImport("User32")]
-        private static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-        [DllImport("User32")]
-        private static extern bool IsIconic(IntPtr hWnd);
-
-        private const int SW_RESTORE = 9;
-
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -1943,12 +1935,12 @@ namespace WixEdit
 
                 if (fileToOpen == null)
                 {
-                    if (IsIconic(hWnd))
+                    if (User32.IsIconic(hWnd))
                     {
-                        ShowWindowAsync(hWnd, SW_RESTORE);
+                        User32.ShowWindowAsync(hWnd, User32.WindowShowStyle.SW_RESTORE);
                     }
 
-                    SetForegroundWindow(hWnd);
+                    User32.SetForegroundWindow(hWnd);
                 }
                 else
                 {
@@ -2071,11 +2063,11 @@ namespace WixEdit
 
                     if (foundForm != null)
                     {
-                        if (IsIconic(foundForm.Handle))
+                        if (User32.IsIconic(foundForm.Handle))
                         {
-                            ShowWindowAsync(foundForm.Handle, SW_RESTORE);
+                            User32.ShowWindowAsync(foundForm.Handle, User32.WindowShowStyle.SW_RESTORE);
                         }
-                        SetForegroundWindow(foundForm.Handle);
+                        User32.SetForegroundWindow(foundForm.Handle);
                     }
                     else
                     {

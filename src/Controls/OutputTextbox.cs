@@ -82,14 +82,10 @@ namespace WixEdit.Controls {
         }
         #endregion
     
-        private const Int32 LF_FACESIZE = 32;
         private const Int32 CFM_BACKCOLOR = 0x4000000;
-        private const Int32 CFE_AUTOBACKCOLOR = CFM_BACKCOLOR;
         private const Int32 WM_USER = 0x400;
         private const Int32 EM_SETCHARFORMAT = (WM_USER + 68);
-        private const Int32 EM_SETBKGNDCOLOR = (WM_USER + 67);
         private const Int32 EM_GETCHARFORMAT = (WM_USER + 58);
-        private const Int32 WM_SETTEXT = 0xC;
         private const Int32 SCF_SELECTION = 0x1;
     
         [DllImport("User32.dll")]
@@ -97,7 +93,6 @@ namespace WixEdit.Controls {
     
         public new Color SelectionBackColor {
             get {
-                IntPtr HWND = Handle;
                 CharFormat2 Format = new CharFormat2();
                 Format.dwMask = CFM_BACKCOLOR;
                 Format.cbSize = Marshal.SizeOf(Format);
@@ -105,7 +100,6 @@ namespace WixEdit.Controls {
                 return ColorTranslator.FromOle(Format.crBackColor);
             }
             set {
-                IntPtr HWND = Handle;
                 CharFormat2 Format = new CharFormat2();
                 Format.crBackColor = ColorTranslator.ToOle(value);
                 Format.dwMask = CFM_BACKCOLOR;
