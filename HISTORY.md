@@ -1,3 +1,8 @@
+# 0.8.x (TBD)
+
+* Added support for Int64 attributes in IntegerConverter [#24](https://github.com/WixEdit/WixEdit/issues/24) [@icnocop](https://github.com/icnocop)
+* Updated P/Invoke code to fix NullReferenceException and AccessViolationException when running in Release configuration [@icnocop](https://github.com/icnocop)
+
 # 0.7.6.14 (2021-10-14)
 
 * Bump System.Net.Http from 4.1.0 to 4.3.4 [#18](https://github.com/WixEdit/WixEdit/pull/18) [@dependabot](https://github.com/dependabot)

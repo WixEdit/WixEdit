@@ -18,6 +18,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 // IN THE SOFTWARE.
 
+using PInvoke;
 using System;
 using System.Collections;
 using System.Drawing;
@@ -33,7 +34,6 @@ namespace WixEdit.Images
     {
         private const uint SHGFI_ICON = 0x100;
         private const uint SHGFI_USEFILEATTRIBUTES = 0x10;
-        private const uint SHGFI_LARGEICON = 0x0;
         private const uint SHGFI_SMALLICON = 0x1;
         private const uint SHGFI_LINKOVERLAY = 0x8000;
 
@@ -41,21 +41,20 @@ namespace WixEdit.Images
 
         private static Hashtable extensionList = new Hashtable();
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct ShFileInfo
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct SHFILEINFO
         {
-            public System.IntPtr hIcon;
+            public IntPtr hIcon;
             public int iIcon;
             public uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
             public string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
             public string szTypeName;
-        };
+        }
 
-        [DllImport("User32.dll")]
-        private static extern int DestroyIcon(System.IntPtr hIcon);
-
-        [DllImport("Shell32.dll")]
-        private static extern System.IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref ShFileInfo psfi, uint cbFileInfo, uint uFlags);
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
 
         public static Icon GetFileIcon(string filePath)
         {
@@ -78,9 +77,9 @@ namespace WixEdit.Images
                     flags |= SHGFI_LINKOVERLAY;
                 }
 
-                ShFileInfo shellFileInfo = new ShFileInfo();
+                SHFILEINFO shellFileInfo = new SHFILEINFO();
 
-                SHGetFileInfo(filePath, FILE_ATTRIBUTE_NORMAL, ref shellFileInfo, (uint)Marshal.SizeOf(shellFileInfo), (uint)flags);
+                SHGetFileInfo(filePath, FILE_ATTRIBUTE_NORMAL, ref shellFileInfo, (uint)Marshal.SizeOf(shellFileInfo), flags);
 
                 if (shellFileInfo.hIcon == IntPtr.Zero)
                 {
@@ -89,7 +88,7 @@ namespace WixEdit.Images
 
                 Icon icon = (Icon)Icon.FromHandle(shellFileInfo.hIcon).Clone();
 
-                DestroyIcon(shellFileInfo.hIcon);
+                User32.DestroyIcon(shellFileInfo.hIcon);
 
                 extensionList[ext] = icon;
 

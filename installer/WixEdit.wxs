@@ -51,12 +51,18 @@
                             <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="..\bin\$(var.Configuration)\Newtonsoft.Json.dll" />
                             <File Id="SQLITEPCLRAW.BATTERIES_V2.DLL" Name="SQLitePCLRaw.batteries_v2.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.batteries_v2.dll" />
                             <File Id="SQLITEPCLRAW.CORE.DLL" Name="SQLitePCLRaw.core.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.core.dll" />
-                            <File Id="SQLITEPCLRAW.NATIVELIBRARY.DLL" Name="SQLitePCLRaw.nativelibrary.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.nativelibrary.dll" />
                             <File Id="SQLITEPCLRAW.PROVIDER.DYNAMIC_CDECL.DLL" Name="SQLitePCLRaw.provider.dynamic_cdecl.dll" Source="..\bin\$(var.Configuration)\SQLitePCLRaw.provider.dynamic_cdecl.dll" />
                             <File Id="SYSTEM.BUFFERS.DLL" Name="System.Buffers.dll" Source="..\bin\$(var.Configuration)\System.Buffers.dll" />
                             <File Id="SYSTEM.MEMORY.DLL" Name="System.Memory.dll" Source="..\bin\$(var.Configuration)\System.Memory.dll" />
                             <File Id="SYSTEM.NUMERICS.VECTORS.DLL" Name="System.Numerics.Vectors.dll" Source="..\bin\$(var.Configuration)\System.Numerics.Vectors.dll" />
                             <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="..\bin\$(var.Configuration)\System.Runtime.CompilerServices.Unsafe.dll" />
+                            <File Id="PINVOKE.KERNEL32.DLL" Name="PInvoke.Kernel32.dll" Source="..\bin\$(var.Configuration)\PInvoke.Kernel32.dll" />
+                            <File Id="PINVOKE.USER32.DLL" Name="PInvoke.User32.dll" Source="..\bin\$(var.Configuration)\PInvoke.User32.dll" />
+                            <File Id="PINVOKE.WINDOWS.CORE.DLL" Name="PInvoke.Windows.Core.dll" Source="..\bin\$(var.Configuration)\PInvoke.Windows.Core.dll" />
+                            <File Id="PINVOKE.WINDOWS.SHELLSCALINGAPI.DLL" Name="PInvoke.Windows.ShellScalingApi.dll" Source="..\bin\$(var.Configuration)\PInvoke.Windows.ShellScalingApi.dll" />
+                            <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL_1" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="..\bin\$(var.Configuration)\System.Runtime.CompilerServices.Unsafe.dll" />
+                            <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="..\bin\$(var.Configuration)\System.Threading.Tasks.Extensions.dll" />
+                            <File Id="VALIDATION.DLL" Name="Validation.dll" Source="..\bin\$(var.Configuration)\Validation.dll" />
                         </Component>
                         <Directory Id="RUNTIMES" Name="runtimes">
                             <Directory Id="WIN_ARM" Name="win-arm">
