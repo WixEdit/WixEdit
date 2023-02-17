@@ -2,6 +2,7 @@
 
 * Added support for Int64 attributes in IntegerConverter [#24](https://github.com/WixEdit/WixEdit/issues/24) [@icnocop](https://github.com/icnocop)
 * Updated P/Invoke code to fix NullReferenceException and AccessViolationException when running in Release configuration [@icnocop](https://github.com/icnocop)
+* Added support for including -ext WixUtilExtension automatically through <extension> build settings [#34](https://github.com/WixEdit/WixEdit/issues/34) [@rtksrubie](https://github.com/rtksrubie)
 
 # 0.7.6.14 (2021-10-14)
 
