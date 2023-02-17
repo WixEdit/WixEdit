@@ -892,7 +892,7 @@ WixFiles.WixNamespaceUri));
             if (!selectedLowerCaseExtensions.Contains("util"))
             {
                 XmlNodeList binaryKeyWixCAList = wxsDocument.SelectNodes("//@BinaryKey[.='WixCA']", wxsNsmgr);
-                if (utilRefList.Count > 0)
+                if (binaryKeyWixCAList.Count > 0)
                 {
                     ret.Append(" -ext WixUtilExtension ");
                 }
