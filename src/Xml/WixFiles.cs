@@ -449,12 +449,30 @@ WixFiles.WixNamespaceUri));
 
         public static void ReloadXsd()
         {
+            bool reloadXsd = false;
+
             xsdDocument = new XmlDocument();
 
-            if (File.Exists(WixEditSettings.Instance.GetWixXsdLocation()))
+            if (WixEditSettings.Instance.IsUsingWix4())
+            {
+                // load xsd from embedded resource
+                string resourcePath = "WixEdit.src.Xsd.wix4.xsd";
+
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Stream xsdStream = assembly.GetManifestResourceStream(resourcePath);
+                xsdDocument.Load(XmlReader.Create(xsdStream));
+
+                reloadXsd = true;
+            }
+            else if (File.Exists(WixEditSettings.Instance.GetWixXsdLocation()))
             {
                 xsdDocument.Load(WixEditSettings.Instance.GetWixXsdLocation());
 
+                reloadXsd = true;
+            }
+
+            if (reloadXsd)
+            {
                 xsdNsmgr = new XmlNamespaceManager(xsdDocument.NameTable);
                 xsdNsmgr.AddNamespace("xs", "http://www.w3.org/2001/XMLSchema");
                 xsdNsmgr.AddNamespace("xse", "http://schemas.microsoft.com/wix/2005/XmlSchemaExtension");
@@ -465,6 +483,12 @@ WixFiles.WixNamespaceUri));
 
         public static bool CheckForXsd()
         {
+            if (WixEditSettings.Instance.IsUsingWix4())
+            {
+                // the Wix 4 xsd is an embedded resource
+                return true;
+            }
+
             return File.Exists(WixEditSettings.Instance.GetWixXsdLocation());
         }
 

@@ -34,6 +34,29 @@ namespace WixEdit.Settings {
             wixEditData = data;
         }
 
+        [Editor(typeof(FilteredFileNameEditor), typeof(UITypeEditor))]
+        [FilteredFileNameEditor.Filter("wix.exe |wix.exe")]
+        [Description("The location of the The Windows Installer XML command line tool (wix)")]
+        public string Wix
+        {
+            get
+            {
+                if (wixEditData.WixLocation == null || wixEditData.WixLocation.Length == 0)
+                {
+                    if (wixEditData.BinDirectory == null || wixEditData.BinDirectory.Length == 0)
+                    {
+                        return String.Empty;
+                    }
+                    return Path.Combine(wixEditData.BinDirectory, "tools", "net6.0", "any", "wix.exe");
+                }
+                else
+                {
+                    return wixEditData.WixLocation;
+                }
+            }
+            set { wixEditData.WixLocation = value; }
+        }
+
         [
         DefaultValueAttribute(true),
         Editor(typeof(FilteredFileNameEditor), typeof(System.Drawing.Design.UITypeEditor)),
@@ -121,7 +144,11 @@ namespace WixEdit.Settings {
         }
 
         public bool HasSameBinDirectory() {
-            if (wixEditData.CandleLocation == null && wixEditData.DarkLocation == null && wixEditData.LightLocation == null && wixEditData.XsdsLocation == null) {
+            if (wixEditData.CandleLocation == null
+                && wixEditData.DarkLocation == null
+                && wixEditData.LightLocation == null
+                && wixEditData.XsdsLocation == null)
+            {
                 return true;
             }
 
@@ -186,6 +213,7 @@ namespace WixEdit.Settings {
             public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value) {
                 WixEditSettings.WixEditData data = WixEditSettings.Instance.GetInternalDataStructure();
                 data.BinDirectory = value as string;
+                data.WixLocation = String.Empty;
                 data.CandleLocation = String.Empty;
                 data.LightLocation = String.Empty;
                 data.DarkLocation = String.Empty;

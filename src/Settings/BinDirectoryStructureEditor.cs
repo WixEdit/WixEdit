@@ -107,8 +107,10 @@ namespace WixEdit.Settings {
             dialog.SelectedPath = value.BinDirectory;
 
             DialogResult result = dialog.ShowDialog();
-            if(result == DialogResult.OK) {
+            if(result == DialogResult.OK)
+            {
                 value.BinDirectory = dialog.SelectedPath;
+                value.Wix = null;
                 value.Candle = null;
                 value.Xsds = null;
                 value.Dark = null;

@@ -657,6 +657,9 @@
     </Compile>
     <Compile Include="src\Xml\XmlDocumentationManager.cs" />
     <Compile Include="src\Xml\XPathHelper.cs" />
+    <EmbeddedResource Include="src\Xsd\wix4.xsd">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
