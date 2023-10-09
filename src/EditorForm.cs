@@ -46,6 +46,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using PInvoke;
 using System.Collections.Generic;
+using WixEdit.src.Exceptions;
 
 namespace WixEdit
 {
@@ -1371,7 +1372,7 @@ namespace WixEdit
                 string wixExeFilePath = WixEditSettings.Instance.WixBinariesDirectory.Wix;
                 if (!File.Exists(wixExeFilePath))
                 {
-                    throw new WixEditException("The executable \"wix.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                    throw new WixBinariesDirectoryFileNotFoundException("wix.exe");
                 }
 
                 ProcessStartInfo psiWix = new ProcessStartInfo
@@ -1390,9 +1391,9 @@ namespace WixEdit
             else
             {
                 string candleExe = WixEditSettings.Instance.WixBinariesDirectory.Candle;
-                if (File.Exists(candleExe) == false)
+                if (!File.Exists(candleExe))
                 {
-                    throw new WixEditException("The executable \"candle.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                    throw new WixBinariesDirectoryFileNotFoundException("candle.exe");
                 }
 
                 ProcessStartInfo psiCandle = new ProcessStartInfo
@@ -1409,7 +1410,7 @@ namespace WixEdit
                 string lightExe = WixEditSettings.Instance.WixBinariesDirectory.Light;
                 if (File.Exists(lightExe) == false)
                 {
-                    throw new WixEditException("The executable \"light.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                    throw new WixBinariesDirectoryFileNotFoundException("light.exe");
                 }
 
                 ProcessStartInfo psiLight = new ProcessStartInfo
@@ -1440,16 +1441,18 @@ namespace WixEdit
             string darkExe = WixEditSettings.Instance.WixBinariesDirectory.Dark;
             if (File.Exists(darkExe) == false)
             {
-                throw new WixEditException("The executable \"dark.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                throw new WixBinariesDirectoryFileNotFoundException("dark.exe");
             }
 
-            ProcessStartInfo psiDark = new ProcessStartInfo();
-            psiDark.FileName = darkExe;
-            psiDark.CreateNoWindow = true;
-            psiDark.UseShellExecute = false;
-            psiDark.RedirectStandardOutput = true;
-            psiDark.RedirectStandardError = true;
-            psiDark.Arguments = String.Format("-nologo -x \"{0}\" \"{1}\" \"{2}\"", msiFile.DirectoryName, msiFile.FullName, Path.ChangeExtension(msiFile.FullName, "wxs"));
+            ProcessStartInfo psiDark = new ProcessStartInfo
+            {
+                FileName = darkExe,
+                CreateNoWindow = true,
+                UseShellExecute = false,
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                Arguments = String.Format("-nologo -x \"{0}\" \"{1}\" \"{2}\"", msiFile.DirectoryName, msiFile.FullName, Path.ChangeExtension(msiFile.FullName, "wxs"))
+            };
 
             ShowOutputPanel();
             outputPanel.Clear();

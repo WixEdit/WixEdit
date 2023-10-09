@@ -375,6 +375,7 @@
     <Compile Include="src\EditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="src\Exceptions\WixBinariesDirectoryFileNotFoundException.cs" />
     <Compile Include="src\Forms\DesignerForm.cs">
       <SubType>Form</SubType>
     </Compile>
