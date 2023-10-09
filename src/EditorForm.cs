@@ -45,6 +45,7 @@ using Microsoft.AppCenter.Crashes;
 using System.Threading.Tasks;
 using System.Linq;
 using PInvoke;
+using System.Collections.Generic;
 
 namespace WixEdit
 {
@@ -1363,41 +1364,73 @@ namespace WixEdit
 
         private void Compile()
         {
-            string candleExe = WixEditSettings.Instance.WixBinariesDirectory.Candle;
-            if (File.Exists(candleExe) == false)
+            List<ProcessStartInfo> processes = new List<ProcessStartInfo>();
+
+            if (WixEditSettings.Instance.IsUsingWix4())
             {
-                throw new WixEditException("The executable \"candle.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                string wixExeFilePath = WixEditSettings.Instance.WixBinariesDirectory.Wix;
+                if (!File.Exists(wixExeFilePath))
+                {
+                    throw new WixEditException("The executable \"wix.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                }
+
+                ProcessStartInfo psiWix = new ProcessStartInfo
+                {
+                    FileName = wixExeFilePath,
+                    WorkingDirectory = wixFiles.WxsFile.Directory.FullName,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    Arguments = wixFiles.GetWixArguments()
+                };
+
+                processes.Add(psiWix);
             }
-
-            ProcessStartInfo psiCandle = new ProcessStartInfo();
-            psiCandle.FileName = candleExe;
-            psiCandle.WorkingDirectory = wixFiles.WxsFile.Directory.FullName;
-            psiCandle.CreateNoWindow = true;
-            psiCandle.UseShellExecute = false;
-            psiCandle.RedirectStandardOutput = true;
-            psiCandle.RedirectStandardError = true;
-            psiCandle.Arguments = wixFiles.GetCandleArguments();
-
-            string lightExe = WixEditSettings.Instance.WixBinariesDirectory.Light;
-            if (File.Exists(lightExe) == false)
+            else
             {
-                throw new WixEditException("The executable \"light.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
-            }
+                string candleExe = WixEditSettings.Instance.WixBinariesDirectory.Candle;
+                if (File.Exists(candleExe) == false)
+                {
+                    throw new WixEditException("The executable \"candle.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                }
 
-            ProcessStartInfo psiLight = new ProcessStartInfo();
-            psiLight.FileName = lightExe;
-            psiLight.WorkingDirectory = wixFiles.WxsFile.Directory.FullName;
-            psiLight.CreateNoWindow = true;
-            psiLight.UseShellExecute = false;
-            psiLight.RedirectStandardOutput = true;
-            psiLight.RedirectStandardError = true;
-            psiLight.Arguments = wixFiles.GetLightArguments();
+                ProcessStartInfo psiCandle = new ProcessStartInfo
+                {
+                    FileName = candleExe,
+                    WorkingDirectory = wixFiles.WxsFile.Directory.FullName,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    Arguments = wixFiles.GetCandleArguments()
+                };
+
+                string lightExe = WixEditSettings.Instance.WixBinariesDirectory.Light;
+                if (File.Exists(lightExe) == false)
+                {
+                    throw new WixEditException("The executable \"light.exe\" could not be found.\r\n\r\nPlease specify the correct path to the Wix binaries in the settings dialog.");
+                }
+
+                ProcessStartInfo psiLight = new ProcessStartInfo
+                {
+                    FileName = lightExe,
+                    WorkingDirectory = wixFiles.WxsFile.Directory.FullName,
+                    CreateNoWindow = true,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    Arguments = wixFiles.GetLightArguments()
+                };
+
+                processes.AddRange(new[]{ psiCandle, psiLight });
+            }
 
             ShowOutputPanel();
             outputPanel.Clear();
             Update();
 
-            outputPanel.Run(new ProcessStartInfo[] { psiCandle, psiLight }, wixFiles);
+            outputPanel.Run(processes.ToArray(), wixFiles);
         }
 
         private void Decompile(string fileName, OutputPanel.OnCompleteDelegate onComplete)
