@@ -945,6 +945,11 @@ WixFiles.WixNamespaceUri));
             }
         }
 
+        public string GetWixArguments()
+        {
+            return $"build \"{wxsFile.FullName}\" -out \"{OutputFile}\"";
+        }
+
         private string GetCustomCandleArguments()
         {
             string candleArgs = projectSettings.CandleArgs;
