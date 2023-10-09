@@ -75,6 +75,7 @@ namespace WixEdit.Settings {
 
             public WixEditData(WixEditData oldVersion, XmlDocument rawData) {
                 BinDirectory = oldVersion.BinDirectory;
+                WixLocation = oldVersion.WixLocation;
                 DarkLocation = oldVersion.DarkLocation;
                 CandleLocation = oldVersion.CandleLocation;
                 LightLocation = oldVersion.LightLocation;
@@ -90,7 +91,11 @@ namespace WixEdit.Settings {
 
                 // Some magic to deal with a new WixEdit installation including a newer WiX version...
                 if (!String.IsNullOrEmpty(BinDirectory) &&
-                    (String.IsNullOrEmpty(DarkLocation) && String.IsNullOrEmpty(CandleLocation) && String.IsNullOrEmpty(LightLocation) && String.IsNullOrEmpty(XsdsLocation)))
+                    (String.IsNullOrEmpty(WixLocation)
+                    && String.IsNullOrEmpty(DarkLocation)
+                    && String.IsNullOrEmpty(CandleLocation)
+                    && String.IsNullOrEmpty(LightLocation)
+                    && String.IsNullOrEmpty(XsdsLocation)))
                 {
                     if (!Directory.Exists(BinDirectory))
                     {
@@ -168,10 +173,11 @@ namespace WixEdit.Settings {
             }
 
             public string BinDirectory;
-            public string DarkLocation;
-            public string CandleLocation;
-            public string LightLocation;
-            public string XsdsLocation;
+            public string WixLocation; // Wix v4
+            public string DarkLocation; // Wix v3
+            public string CandleLocation; // Wix v3
+            public string LightLocation; // Wix v3
+            public string XsdsLocation; // Wix v3
             public string TemplateDirectory;
             public string ExternalXmlEditor;
             public bool UseInstanceOnly;
@@ -391,7 +397,13 @@ namespace WixEdit.Settings {
         ]
         public BinDirectoryStructure WixBinariesDirectory {
             get {
-                if (data.BinDirectory == null && data.CandleLocation == null && data.DarkLocation == null && data.LightLocation == null && data.XsdsLocation == null) {
+                if (data.BinDirectory == null
+                    && data.WixLocation == null
+                    && data.CandleLocation == null
+                    && data.DarkLocation == null
+                    && data.LightLocation == null
+                    && data.XsdsLocation == null)
+                {
                     List<DirectoryInfo> dirs = new List<DirectoryInfo>();
 
                     // With the installation of WixEdit the WiX toolset binaries are installed in "..\wix*", 
@@ -444,9 +456,13 @@ namespace WixEdit.Settings {
                 return new BinDirectoryStructure(data);
             }
             set {
-                if (value.HasSameBinDirectory()) {
+                if (value.HasSameBinDirectory())
+                {
                     data.BinDirectory = new FileInfo(value.Candle).Directory.FullName;
-                } else {
+                }
+                else
+                {
+                    data.WixLocation = value.Wix;
                     data.CandleLocation = value.Candle;
                     data.LightLocation = value.Light;
                     data.DarkLocation = value.Dark;
@@ -464,9 +480,18 @@ namespace WixEdit.Settings {
         public string WixBinariesVersion {
             get {
                 BinDirectoryStructure binaries = WixBinariesDirectory;
-                if (File.Exists(binaries.Candle) == false ||
-                    File.Exists(binaries.Light) == false ||
-                    File.Exists(binaries.Dark) == false) {
+
+                if (File.Exists(binaries.Wix))
+                {
+                    // Wix v4
+                    return FileVersionInfo.GetVersionInfo(binaries.Wix).FileVersion;
+                }
+
+
+                if (!File.Exists(binaries.Candle)
+                    || !File.Exists(binaries.Light)
+                    || !File.Exists(binaries.Dark))
+                {
                     return "(Not all files present)";
                 }
 
